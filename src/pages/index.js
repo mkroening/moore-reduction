@@ -44,18 +44,21 @@ class InputRow extends React.Component {
         const states = Array.from({length: this.props.destStateCount}, (v, k) => (
             <td>
                 <label>Z</label>
-                <input onInput={evt => this.props.onInput(this.props.index, k, evt.target.value)} size="1"/>
+                <input onInput={evt => this.props.onInput(this.props.index, k, parseInt(evt.target.value, 10))}
+                       value={this.props.value[k + 1]}
+                       size="1"/>
             </td>
         ));
 
         return (
             <tr>
-                <th>Z{this.props.index}</th>
+                <th>Z{this.props.index + 1}</th>
                 {states}
                 <td>
                     <label>Y</label>
                     <input
-                        onInput={evt => this.props.onInput(this.props.index, this.props.destStateCount, evt.target.value)}
+                        onInput={evt => this.props.onInput(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}
+                        value={this.props.value[this.props.value.length - 1]}
                         size="1"/>
                 </td>
             </tr>
@@ -66,7 +69,7 @@ class InputRow extends React.Component {
 class InputTable extends React.Component {
     constructor(props) {
         super(props);
-        const defaultStateCount = 10;
+        const defaultStateCount = 11;
         const defaultInputCount = 3;
         const defaultArray = [
             [1, 10, 1, 6, 2],
@@ -130,6 +133,7 @@ class InputTable extends React.Component {
         const rows = Array.from({length: this.state.stateCount}, (v, k) => (
             <InputRow
                 index={k}
+                value={this.state.table[k]}
                 destStateCount={this.state.inputCount}
                 onInput={this.setDestinationStates}
             />
