@@ -44,7 +44,7 @@ class InputRow extends React.Component {
         const states = Array.from({length: this.props.destStateCount}, (v, k) => (
             <td>
                 <label>Z</label>
-                <input onInput={evt => this.props.onInput(this.props.index, k, parseInt(evt.target.value, 10))}
+                <input onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}
                        value={this.props.value[k + 1]}
                        size="1"/>
             </td>
@@ -57,7 +57,7 @@ class InputRow extends React.Component {
                 <td>
                     <label>Y</label>
                     <input
-                        onInput={evt => this.props.onInput(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}
+                        onChange={evt => this.props.onChange(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}
                         value={this.props.value[this.props.value.length - 1]}
                         size="1"/>
                 </td>
@@ -135,7 +135,7 @@ class InputTable extends React.Component {
                 index={k}
                 value={this.state.table[k]}
                 destStateCount={this.state.inputCount}
-                onInput={this.setDestinationStates}
+                onChange={this.setDestinationStates}
             />
         ));
 
