@@ -224,7 +224,7 @@ class States {
     }
 }
 
-class StateTransitionTable extends React.Component {
+class EquivalencePartitionTable extends React.Component {
     render() {
         return (
             <table cellPadding={4} cellSpacing={3}>
@@ -251,6 +251,37 @@ class StateTransitionTable extends React.Component {
     }
 }
 
+class StateTransitionTable extends React.Component {
+    static reduceStates(states) {
+        return Array.from({length: States.getHighestEquivalencePartition(states)}, (v, k) => k + 1)
+            .map(equivalencePartition => states.find(state => state.equivalencePartition === equivalencePartition));
+    }
+
+    render() {
+        return (
+            <table cellPadding={4} cellSpacing={3}>
+                <thead>
+                <tr>
+                    <th>States</th>
+                    {Array.from({length: this.props.stateTransitions[0].nextStates.length}, (v, k) => <th>X{k}</th>)}
+                    <th>Output</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.props.stateTransitions.map(state => (
+                    <tr>
+                        <td>Z'{state.equivalencePartition}</td>
+                        {state.nextStates.map(state => <td>Z'{state.equivalencePartition}</td>)}
+                        <td>Y{state.output}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        );
+    }
+}
+
+
 class Simplifier extends React.Component {
     constructor(props) {
         super(props);
@@ -261,8 +292,11 @@ class Simplifier extends React.Component {
     }
 
     simplify(rawTable) {
+        const reductionSteps = States.reductionSteps(States.fromRawTable(rawTable));
+        const stateTransitions = StateTransitionTable.reduceStates(reductionSteps[reductionSteps.length - 1]);
         this.setState({
-            reductionSteps: States.reductionSteps(States.fromRawTable(rawTable)),
+            reductionSteps: reductionSteps,
+            stateTransitions: stateTransitions,
         });
     }
 
@@ -270,7 +304,8 @@ class Simplifier extends React.Component {
         return (
             <div>
                 <InputTable onSubmit={this.simplify}/>
-                {this.state.reductionSteps.map(step => <StateTransitionTable states={step}/>)}
+                {this.state.reductionSteps.map(step => <EquivalencePartitionTable states={step}/>)}
+                {this.state.stateTransitions !== undefined ? <StateTransitionTable stateTransitions={this.state.stateTransitions}/> : undefined}
             </div>
         )
     }
