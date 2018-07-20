@@ -49,7 +49,7 @@ class InputRow extends React.Component {
                         <label>Z</label>
                         <input onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}
                                value={this.props.value[k + 1]}
-                               size="1"/>
+                               size={1}/>
                     </td>
                 ))}
                 <td>
@@ -57,7 +57,7 @@ class InputRow extends React.Component {
                     <input
                         onChange={evt => this.props.onChange(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}
                         value={this.props.value[this.props.value.length - 1]}
-                        size="1"/>
+                        size={1}/>
                 </td>
             </tr>
         );
@@ -127,16 +127,16 @@ class InputTable extends React.Component {
         return (
             <div>
                 <Counter
-                    title="States"
+                    title={"States"}
                     initCount={this.state.stateCount}
                     setCount={i => this.setStateCount(i)}
                 />
                 <Counter
-                    title="Inputs"
+                    title={"Inputs"}
                     initCount={this.state.inputCount}
                     setCount={i => this.setInputCount(i)}
                 />
-                <table cellPadding="4" cellSpacing="3">
+                <table cellPadding={4} cellSpacing={3}>
                     <caption>State transition table</caption>
                     <thead>
                     <tr>
@@ -227,7 +227,7 @@ class States {
 class StateTransitionTable extends React.Component {
     render() {
         return (
-            <table cellPadding="4" cellSpacing="3">
+            <table cellPadding={4} cellSpacing={3}>
                 <thead>
                 <tr>
                     <th>States</th>
