@@ -8,8 +8,10 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "@material-ui/core": "^1.4.0",
     "gatsby": "^1.9.250",
     "gatsby-link": "^1.6.40",
+    "react": "^16.4.1",
     "react-katex": "^2.0.2"
   }
 }
