@@ -38,11 +38,12 @@ const styles = theme => ({
 
 class InputRow extends React.Component {
     render() {
-        const {inputCount, stateNumber, values, onChange, classes} = this.props;
+        const {inputCount, values, onChange, classes} = this.props;
+        const stateNumber = values[0];
         return (
             <TableRow>
                 <TableCell padding={"dense"}>
-                    <InlineMath>{String.raw`Z_{${stateNumber + 1}}`}</InlineMath>
+                    <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
                 </TableCell>
                 {Array.from({length: inputCount}, (v, k) => (
                     <TableCell padding={"dense"}>
@@ -86,40 +87,70 @@ class InputTable extends React.Component {
             inputCount: defaultInputCount,
             table: defaultArray,
         };
-        this.handleNextStateChangeChange = this.handleNextStateChangeChange.bind(this);
+        this.handleNextStateChange = this.handleNextStateChange.bind(this);
     }
 
-    handleStateCountChange(stateCount) {
-        if (stateCount < this.state.stateCount)
+    handleStateCountChange(newStateCount) {
+        const {stateCount, inputCount, table} = this.state;
+        if (isNaN(newStateCount))
+            newStateCount = inputCount;
+        else if (newStateCount < 2)
+            newStateCount = 2;
+        if (newStateCount !== inputCount) {
+            const newTable = JSON.parse(JSON.stringify(table));
+            if (newStateCount < stateCount) {
+                newTable.splice(newStateCount);
+                newTable.forEach((row, index, table) => row.forEach((cell, index, row) => {
+                    if (cell > table.length)
+                        row[index] = table.length;
+                }));
+            } else if (newStateCount > stateCount) {
+                Array.prototype.splice.apply(newTable, [stateCount, 0]
+                    .concat(Array.from({length: newStateCount - stateCount},
+                        (v, k) => [stateCount + k + 1].concat(new Array(inputCount).fill(1)))));
+            }
             this.setState({
-                stateCount: stateCount,
-                table: this.state.table.slice(0, stateCount),
+                stateCount: newStateCount,
+                table: newTable,
             });
-        else if (stateCount > this.state.stateCount)
+        }
+    }
+
+    handleInputCountChange(newInputCount) {
+        const {inputCount, table} = this.state;
+        if (isNaN(newInputCount))
+            newInputCount = inputCount;
+        else if (newInputCount < 1)
+            newInputCount = 1;
+        if (newInputCount !== inputCount) {
+            const newTable = JSON.parse(JSON.stringify(table));
+            if (newInputCount < inputCount)
+                newTable.forEach(row => row.splice(newInputCount + 1, inputCount - newInputCount));
+            else if (newInputCount > inputCount)
+                newTable.forEach(row => Array.prototype.splice.apply(row, [inputCount + 1, 0]
+                    .concat(new Array(newInputCount - inputCount).fill(1))));
             this.setState({
-                stateCount: stateCount,
-                table: this.state.table.concat(Array.from({length: stateCount - this.state.stateCount}, () => Array.from({length: this.state.inputCount + 2}))),
+                inputCount: newInputCount,
+                table: newTable,
             });
+        }
     }
 
-    handleInputCountChange(inputCount) {
-        const newTable = this.state.table.slice();
-        if (inputCount < this.state.inputCount)
-            newTable.forEach(row => row.splice(inputCount + 1, this.state.inputCount - inputCount));
-        else if (inputCount > this.state.inputCount)
-            newTable.forEach(row => row.splice(this.state.inputCount + 1, 0, undefined));
-        this.setState({
-            inputCount: inputCount,
-            table: newTable,
-        });
-    }
-
-    handleNextStateChangeChange(state, input, nextState) {
-        const table = this.state.table;
-        table[state][input + 1] = nextState;
-        this.setState({
-            table: table,
-        });
+    handleNextStateChange(state, input, nextState) {
+        const {table} = this.state;
+        if (isNaN(nextState))
+            nextState = table[state - 1][input + 1];
+        else if (nextState > table.length)
+            nextState = table.length;
+        else if (nextState < 1)
+            nextState = 1;
+        if (table[state - 1][input + 1] !== nextState) {
+            const newTable = JSON.parse(JSON.stringify(table));
+            newTable[state - 1][input + 1] = nextState;
+            this.setState({
+                table: newTable,
+            });
+        }
     }
 
     render() {
@@ -133,11 +164,11 @@ class InputTable extends React.Component {
                     </Typography>
                     <div className={classes.spacer}/>
                     <TextField label={"States"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
-                               defaultValue={stateCount}
-                               onChange={evt => this.handleStateCountChange(evt.target.value)}/>
+                               value={stateCount}
+                               onChange={evt => this.handleStateCountChange(parseInt(evt.target.value))}/>
                     <TextField label={"Inputs"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
-                               defaultValue={inputCount}
-                               onChange={evt => this.handleInputCountChange(evt.target.value)}/>
+                               value={inputCount}
+                               onChange={evt => this.handleInputCountChange(parseInt(evt.target.value))}/>
                     <div className={classes.spacer}/>
                     <Button variant="contained" color="primary"
                             onClick={() => onSubmit(table)}>Reduce</Button>
@@ -158,10 +189,9 @@ class InputTable extends React.Component {
                         {Array.from({length: stateCount}, (v, k) =>
                             <InputRow
                                 classes={classes}
-                                stateNumber={k}
                                 values={table[k]}
                                 inputCount={inputCount}
-                                onChange={this.handleNextStateChangeChange}/>
+                                onChange={this.handleNextStateChange}/>
                         )}
                     </TableBody>
                 </Table>
