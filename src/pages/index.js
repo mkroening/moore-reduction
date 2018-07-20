@@ -171,6 +171,7 @@ class States {
                 equivalencePartition: rawRow[rawRow.length - 1],
                 nextStates: rawRow.slice(1, rawRow.length - 1).map(cell => ({number: cell})),
             }));
+        states.equivalence = 0;
         this.sort(states);
         this.applyEquivalencePartitions(states);
         return states;
@@ -216,6 +217,7 @@ class States {
         const nextStates = groups.reduce((acc, val) => acc.concat(val), []);    // TODO: Array.prototype.flatMap()
         this.sort(nextStates);
         this.applyEquivalencePartitions(nextStates);
+        nextStates.equivalence = states.equivalence + 1;
         return nextStates;
     }
 
@@ -237,11 +239,11 @@ class EquivalencePartitionTable extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.states.map(state => (
+                {this.props.states.map((state, index, states) => (
                     <tr>
                         <td>Z{state.number}</td>
-                        {state.nextStates.map(state => <td>Z{state.number} - K{state.equivalencePartition}</td>)}
-                        <td>K{state.equivalencePartition}</td>
+                        {state.nextStates.map(state => <td>Z{state.number} - K{state.equivalencePartition} - {states.equivalence}</td>)}
+                        <td>K{state.equivalencePartition} - {states.equivalence}</td>
                         <td>Y{state.output}</td>
                     </tr>
                 ))}
