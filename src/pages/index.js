@@ -23,8 +23,12 @@ const theme = createMuiTheme({
 });
 
 const styles = theme => ({
-    textField: {
+    numberField: {
         width: 36,
+    },
+    numberFieldMargin: {
+        width: 36,
+        margin: theme.spacing.unit,
     },
     button: {
         margin: theme.spacing.unit,
@@ -33,42 +37,6 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
 });
-
-class Counter extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: this.props.initCount,
-        };
-    }
-
-    render() {
-        const {classes} = this.props;
-        return (
-            <div>
-                {this.props.title}: {this.state.count}
-                <Button variant="fab" mini color="secondary" aria-label="Add" className={classes.button}
-                        onClick={() => {
-                            this.setState(prevState => ({
-                                count: prevState.count + 1,
-                            }));
-                            this.props.setCount(this.state.count + 1);
-                        }}>
-                    +
-                </Button>
-                <Button variant="fab" mini color="secondary" aria-label="Add" className={classes.button}
-                        onClick={() => {
-                            this.setState(prevState => ({
-                                count: prevState.count - 1,
-                            }));
-                            this.props.setCount(this.state.count - 1);
-                        }}>
-                    -
-                </Button>
-            </div>
-        );
-    }
-}
 
 class InputRow extends React.Component {
     render() {
@@ -81,14 +49,14 @@ class InputRow extends React.Component {
                 {Array.from({length: this.props.destStateCount}, (v, k) => (
                     <TableCell padding={"checkbox"}>
                         <InlineMath>Z</InlineMath>
-                        <TextField type={"number"} className={classes.textField}
+                        <TextField type={"number"} className={classes.numberField}
                                    value={this.props.value[k + 1]}
                                    onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}/>
                     </TableCell>
                 ))}
                 <TableCell padding={"checkbox"}>
                     <InlineMath>Y</InlineMath>
-                    <TextField type={"number"} className={classes.textField}
+                    <TextField type={"number"} className={classes.numberField}
                                value={this.props.value[this.props.value.length - 1]}
                                onChange={evt => this.props.onChange(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}/>
                 </TableCell>
@@ -160,38 +128,38 @@ class InputTable extends React.Component {
         const {classes} = this.props;
         return (
             <div>
-                <Counter classes={classes}
-                         title={"States"}
-                         initCount={this.state.stateCount}
-                         setCount={i => this.setStateCount(i)}/>
-                <Counter classes={classes}
-                         title={"Inputs"}
-                         initCount={this.state.inputCount}
-                         setCount={i => this.setInputCount(i)}/>
                 <Paper className={classes.paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell padding={"checkbox"}>States</TableCell>
-                                {Array.from({length: this.state.inputCount}, (v, k) =>
-                                    <TableCell padding={"checkbox"}>
-                                        <InlineMath>{String.raw`X_${k}`}</InlineMath>
-                                    </TableCell>
+                    <TextField label={"States"} type={"number"} margin={"normal"} className={classes.numberFieldMargin}
+                               defaultValue={this.state.stateCount}
+                               onChange={evt => this.setStateCount(evt.target.value)}/>
+                    <TextField label={"Inputs"} type={"number"} margin={"normal"} className={classes.numberFieldMargin}
+                               defaultValue={this.state.inputCount}
+                               onChange={evt => this.setInputCount(evt.target.value)}/>
+                    <Paper>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell padding={"checkbox"}>States</TableCell>
+                                    {Array.from({length: this.state.inputCount}, (v, k) =>
+                                        <TableCell padding={"checkbox"}>
+                                            <InlineMath>{String.raw`X_${k}`}</InlineMath>
+                                        </TableCell>
+                                    )}
+                                    <TableCell padding={"checkbox"}>Output</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {Array.from({length: this.state.stateCount}, (v, k) =>
+                                    <InputRow
+                                        classes={classes}
+                                        index={k}
+                                        value={this.state.table[k]}
+                                        destStateCount={this.state.inputCount}
+                                        onChange={this.setDestinationStates}/>
                                 )}
-                                <TableCell padding={"checkbox"}>Output</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Array.from({length: this.state.stateCount}, (v, k) =>
-                                <InputRow
-                                    classes={classes}
-                                    index={k}
-                                    value={this.state.table[k]}
-                                    destStateCount={this.state.inputCount}
-                                    onChange={this.setDestinationStates}/>
-                            )}
-                        </TableBody>
-                    </Table>
+                            </TableBody>
+                        </Table>
+                    </Paper>
                 </Paper>
                 <Button variant="contained" color="primary" className={classes.button}
                         onClick={() => this.props.onSubmit(this.state.table)}>Reduce</Button>
