@@ -158,7 +158,7 @@ class InputTable extends React.Component {
                     ))}
                     </tbody>
                 </table>
-                <button onClick={() => this.props.onSubmit(this.state.table)}/>
+                <button onClick={() => this.props.onSubmit(this.state.table)}>Reduce</button>
             </div>
         );
     }
