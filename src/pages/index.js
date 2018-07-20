@@ -20,13 +20,13 @@ import {MuiThemeProvider, createMuiTheme, withStyles} from '@material-ui/core/st
 
 const theme = createMuiTheme({
     typography: {
-        fontSize: 16,
+        fontSize: 18,
     },
 });
 
 const styles = theme => ({
     numberField: {
-        width: 36,
+        width: 40,
     },
     toolbarNumberField: {
         width: 50,
