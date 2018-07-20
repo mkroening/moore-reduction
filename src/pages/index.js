@@ -38,7 +38,8 @@ const styles = theme => ({
 
 class InputRow extends React.Component {
     render() {
-        const {inputCount, values, onChange, classes} = this.props;
+        const {values, onChange, classes} = this.props;
+        const inputCount = values.length - 2;
         const stateNumber = values[0];
         return (
             <TableRow>
@@ -67,9 +68,7 @@ class InputRow extends React.Component {
 class InputTable extends React.Component {
     constructor(props) {
         super(props);
-        const defaultStateCount = 11;
-        const defaultInputCount = 3;
-        const defaultArray = [
+        const defaultTable = [
             [1, 10, 1, 6, 2],
             [2, 11, 8, 6, 2],
             [3, 1, 7, 6, 1],
@@ -83,20 +82,20 @@ class InputTable extends React.Component {
             [11, 1, 6, 4, 1]
         ];
         this.state = {
-            stateCount: defaultStateCount,
-            inputCount: defaultInputCount,
-            table: defaultArray,
+            table: defaultTable,
         };
         this.handleNextStateChange = this.handleNextStateChange.bind(this);
     }
 
     handleStateCountChange(newStateCount) {
-        const {stateCount, inputCount, table} = this.state;
+        const {table} = this.state;
+        const stateCount = table.length;
+        const inputCount = table[0].length - 2;
         if (isNaN(newStateCount))
             newStateCount = inputCount;
         else if (newStateCount < 2)
             newStateCount = 2;
-        if (newStateCount !== inputCount) {
+        if (newStateCount !== stateCount) {
             const newTable = JSON.parse(JSON.stringify(table));
             if (newStateCount < stateCount) {
                 newTable.splice(newStateCount);
@@ -107,7 +106,7 @@ class InputTable extends React.Component {
             } else if (newStateCount > stateCount) {
                 Array.prototype.splice.apply(newTable, [stateCount, 0]
                     .concat(Array.from({length: newStateCount - stateCount},
-                        (v, k) => [stateCount + k + 1].concat(new Array(inputCount).fill(1)))));
+                        (v, k) => [stateCount + k + 1].concat(new Array(inputCount + 1).fill(1)))));
             }
             this.setState({
                 stateCount: newStateCount,
@@ -117,7 +116,8 @@ class InputTable extends React.Component {
     }
 
     handleInputCountChange(newInputCount) {
-        const {inputCount, table} = this.state;
+        const {table} = this.state;
+        const inputCount = table[0].length - 2;
         if (isNaN(newInputCount))
             newInputCount = inputCount;
         else if (newInputCount < 1)
@@ -155,7 +155,9 @@ class InputTable extends React.Component {
 
     render() {
         const {onSubmit, classes} = this.props;
-        const {stateCount, inputCount, table} = this.state;
+        const {table} = this.state;
+        const stateCount = table.length;
+        const inputCount = table[0].length - 2;
         return (
             <Paper>
                 <Toolbar>
@@ -190,7 +192,6 @@ class InputTable extends React.Component {
                             <InputRow
                                 classes={classes}
                                 values={table[k]}
-                                inputCount={inputCount}
                                 onChange={this.handleNextStateChange}/>
                         )}
                     </TableBody>
