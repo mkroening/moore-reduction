@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 
 const styles = theme => ({
     textField: {
-        width: 20,
+        width: 36,
     },
     button: {
         margin: theme.spacing.unit,
@@ -81,13 +81,15 @@ class InputRow extends React.Component {
                 {Array.from({length: this.props.destStateCount}, (v, k) => (
                     <TableCell padding={"checkbox"}>
                         <InlineMath>Z</InlineMath>
-                        <TextField value={this.props.value[k + 1]} className={classes.textField}
+                        <TextField type={"number"} className={classes.textField}
+                                   value={this.props.value[k + 1]}
                                    onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}/>
                     </TableCell>
                 ))}
                 <TableCell padding={"checkbox"}>
                     <InlineMath>Y</InlineMath>
-                    <TextField value={this.props.value[this.props.value.length - 1]} className={classes.textField}
+                    <TextField type={"number"} className={classes.textField}
+                               value={this.props.value[this.props.value.length - 1]}
                                onChange={evt => this.props.onChange(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}/>
                 </TableCell>
             </TableRow>
