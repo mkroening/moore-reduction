@@ -1,4 +1,6 @@
-import React from "react"
+import React from 'react';
+import 'katex/dist/katex.min.css';
+import {InlineMath} from 'react-katex';
 
 class Counter extends React.Component {
     constructor(props) {
@@ -43,17 +45,17 @@ class InputRow extends React.Component {
     render() {
         return (
             <tr>
-                <th>Z{this.props.index + 1}</th>
+                <th><InlineMath>{String.raw`Z_{${this.props.index + 1}}`}</InlineMath></th>
                 {Array.from({length: this.props.destStateCount}, (v, k) => (
                     <td>
-                        <label>Z</label>
+                        <label><InlineMath>Z</InlineMath></label>
                         <input onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}
                                value={this.props.value[k + 1]}
                                size={1}/>
                     </td>
                 ))}
                 <td>
-                    <label>Y</label>
+                    <label><InlineMath>Y</InlineMath></label>
                     <input
                         onChange={evt => this.props.onChange(this.props.index, this.props.destStateCount, parseInt(evt.target.value, 10))}
                         value={this.props.value[this.props.value.length - 1]}
@@ -141,7 +143,7 @@ class InputTable extends React.Component {
                     <thead>
                     <tr>
                         <th>States</th>
-                        {Array.from({length: this.state.inputCount}, (v, k) => <th>X{k}</th>)}
+                        {Array.from({length: this.state.inputCount}, (v, k) => <th><InlineMath>{String.raw`X_${k}`}</InlineMath></th>)}
                         <th>Output</th>
                     </tr>
                     </thead>
@@ -233,7 +235,7 @@ class EquivalencePartitionTable extends React.Component {
                 <thead>
                 <tr>
                     <th>States</th>
-                    {Array.from({length: this.props.states[0].nextStates.length}, (v, k) => <th>X{k}</th>)}
+                    {Array.from({length: this.props.states[0].nextStates.length}, (v, k) => <th><InlineMath>{String.raw`X_{${k}}`}</InlineMath></th>)}
                     <th>Classes</th>
                     <th>Output</th>
                 </tr>
@@ -241,10 +243,10 @@ class EquivalencePartitionTable extends React.Component {
                 <tbody>
                 {this.props.states.map((state, index, states) => (
                     <tr>
-                        <td>Z{state.number}</td>
-                        {state.nextStates.map(state => <td>Z{state.number} - K{state.equivalencePartition} - {states.equivalence}</td>)}
-                        <td>K{state.equivalencePartition} - {states.equivalence}</td>
-                        <td>Y{state.output}</td>
+                        <td><InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath></td>
+                        {state.nextStates.map(state => <td><InlineMath>{String.raw`Z_{${state.number}} - K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath></td>)}
+                        <td><InlineMath>{String.raw`K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath></td>
+                        <td><InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath></td>
                     </tr>
                 ))}
                 </tbody>
@@ -265,16 +267,16 @@ class StateTransitionTable extends React.Component {
                 <thead>
                 <tr>
                     <th>States</th>
-                    {Array.from({length: this.props.stateTransitions[0].nextStates.length}, (v, k) => <th>X{k}</th>)}
+                    {Array.from({length: this.props.stateTransitions[0].nextStates.length}, (v, k) => <th><InlineMath>{String.raw`X_{${k}}`}</InlineMath></th>)}
                     <th>Output</th>
                 </tr>
                 </thead>
                 <tbody>
                 {this.props.stateTransitions.map(state => (
                     <tr>
-                        <td>Z'{state.equivalencePartition}</td>
-                        {state.nextStates.map(state => <td>Z'{state.equivalencePartition}</td>)}
-                        <td>Y{state.output}</td>
+                        <td><InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath></td>
+                        {state.nextStates.map(state => <td><InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath></td>)}
+                        <td><InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath></td>
                     </tr>
                 ))}
                 </tbody>
@@ -282,7 +284,6 @@ class StateTransitionTable extends React.Component {
         );
     }
 }
-
 
 class Simplifier extends React.Component {
     constructor(props) {
