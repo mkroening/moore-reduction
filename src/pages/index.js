@@ -13,6 +13,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import {MuiThemeProvider, createMuiTheme, withStyles} from '@material-ui/core/styles';
 
@@ -26,15 +28,11 @@ const styles = theme => ({
     numberField: {
         width: 36,
     },
-    numberFieldMargin: {
-        width: 36,
-        margin: theme.spacing.unit,
+    toolbarNumberField: {
+        width: 50,
     },
-    button: {
-        margin: theme.spacing.unit,
-    },
-    paper: {
-        margin: theme.spacing.unit,
+    spacer: {
+        flex: 'auto',
     },
 });
 
@@ -43,18 +41,18 @@ class InputRow extends React.Component {
         const {classes} = this.props;
         return (
             <TableRow>
-                <TableCell padding={"checkbox"}>
+                <TableCell padding={"dense"}>
                     <InlineMath>{String.raw`Z_{${this.props.index + 1}}`}</InlineMath>
                 </TableCell>
                 {Array.from({length: this.props.destStateCount}, (v, k) => (
-                    <TableCell padding={"checkbox"}>
+                    <TableCell padding={"dense"}>
                         <InlineMath>Z</InlineMath>
                         <TextField type={"number"} className={classes.numberField}
                                    value={this.props.value[k + 1]}
                                    onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}/>
                     </TableCell>
                 ))}
-                <TableCell padding={"checkbox"}>
+                <TableCell padding={"dense"}>
                     <InlineMath>Y</InlineMath>
                     <TextField type={"number"} className={classes.numberField}
                                value={this.props.value[this.props.value.length - 1]}
@@ -127,43 +125,46 @@ class InputTable extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <div>
-                <Paper className={classes.paper}>
-                    <TextField label={"States"} type={"number"} margin={"normal"} className={classes.numberFieldMargin}
+            <Paper>
+                <Toolbar>
+                    <Typography variant={"title"}>
+                        Input
+                    </Typography>
+                    <div className={classes.spacer}/>
+                    <TextField label={"States"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
                                defaultValue={this.state.stateCount}
                                onChange={evt => this.setStateCount(evt.target.value)}/>
-                    <TextField label={"Inputs"} type={"number"} margin={"normal"} className={classes.numberFieldMargin}
+                    <TextField label={"Inputs"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
                                defaultValue={this.state.inputCount}
                                onChange={evt => this.setInputCount(evt.target.value)}/>
-                    <Paper>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell padding={"checkbox"}>States</TableCell>
-                                    {Array.from({length: this.state.inputCount}, (v, k) =>
-                                        <TableCell padding={"checkbox"}>
-                                            <InlineMath>{String.raw`X_${k}`}</InlineMath>
-                                        </TableCell>
-                                    )}
-                                    <TableCell padding={"checkbox"}>Output</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {Array.from({length: this.state.stateCount}, (v, k) =>
-                                    <InputRow
-                                        classes={classes}
-                                        index={k}
-                                        value={this.state.table[k]}
-                                        destStateCount={this.state.inputCount}
-                                        onChange={this.setDestinationStates}/>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </Paper>
-                </Paper>
-                <Button variant="contained" color="primary" className={classes.button}
-                        onClick={() => this.props.onSubmit(this.state.table)}>Reduce</Button>
-            </div>
+                    <div className={classes.spacer}/>
+                    <Button variant="contained" color="primary"
+                            onClick={() => this.props.onSubmit(this.state.table)}>Reduce</Button>
+                </Toolbar>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell padding={"dense"}>State</TableCell>
+                            {Array.from({length: this.state.inputCount}, (v, k) =>
+                                <TableCell padding={"dense"}>
+                                    <InlineMath>{String.raw`X_${k}`}</InlineMath>
+                                </TableCell>
+                            )}
+                            <TableCell padding={"dense"}>Output</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {Array.from({length: this.state.stateCount}, (v, k) =>
+                            <InputRow
+                                classes={classes}
+                                index={k}
+                                value={this.state.table[k]}
+                                destStateCount={this.state.inputCount}
+                                onChange={this.setDestinationStates}/>
+                        )}
+                    </TableBody>
+                </Table>
+            </Paper>
         );
     }
 }
@@ -236,35 +237,40 @@ class EquivalencePartitionTable extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Paper className={classes.paper}>
+            <Paper>
+                <Toolbar>
+                    <Typography variant={"title"}>
+                        {this.props.states.equivalence}-Distinguishable States
+                    </Typography>
+                </Toolbar>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell padding={"checkbox"}>States</TableCell>
+                            <TableCell padding={"dense"}>State</TableCell>
                             {Array.from({length: this.props.states[0].nextStates.length}, (v, k) =>
-                                <TableCell padding={"checkbox"}>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell padding={"checkbox"}>Classes</TableCell>
-                            <TableCell padding={"checkbox"}>Output</TableCell>
+                            <TableCell padding={"dense"}>Partition</TableCell>
+                            <TableCell padding={"dense"}>Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.props.states.map((state, index, states) =>
                             <TableRow>
-                                <TableCell padding={"checkbox"}>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map(state =>
-                                    <TableCell padding={"checkbox"}>
+                                    <TableCell padding={"dense"}>
                                         <InlineMath>{String.raw`Z_{${state.number}} - K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding={"checkbox"}>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                 </TableCell>
-                                <TableCell padding={"checkbox"}>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                 </TableCell>
                             </TableRow>
@@ -285,31 +291,36 @@ class StateTransitionTable extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Paper className={classes.paper}>
+            <Paper>
+                <Toolbar>
+                    <Typography variant={"title"}>
+                        Reduced Machine
+                    </Typography>
+                </Toolbar>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>States</TableCell>
+                            <TableCell padding={"dense"}>State</TableCell>
                             {Array.from({length: this.props.stateTransitions[0].nextStates.length}, (v, k) =>
-                                <TableCell>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell>Output</TableCell>
+                            <TableCell padding={"dense"}>Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.props.stateTransitions.map(state => (
                             <TableRow>
-                                <TableCell>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map(state =>
-                                    <TableCell>
+                                    <TableCell padding={"dense"}>
                                         <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell>
+                                <TableCell padding={"dense"}>
                                     <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                 </TableCell>
                             </TableRow>
@@ -343,18 +354,22 @@ class Simplifier extends React.Component {
         const {classes} = this.props;
         return (
             <MuiThemeProvider theme={theme}>
-                <Grid container justify={"center"}>
+                <Grid container spacing={16} justify={"center"}>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
                     <CssBaseline/>
-                    <Grid>
+                    <Grid item>
                         <InputTable classes={classes} onSubmit={this.simplify}/>
-                        {this.state.reductionSteps.map(step =>
-                            <EquivalencePartitionTable classes={classes} states={step}/>
-                        )}
-                        {this.state.stateTransitions === undefined ? undefined :
-                            <StateTransitionTable classes={classes} stateTransitions={this.state.stateTransitions}/>
-                        }
                     </Grid>
+                    {this.state.reductionSteps.map(step =>
+                        <Grid item>
+                            <EquivalencePartitionTable classes={classes} states={step}/>
+                        </Grid>
+                    )}
+                    {this.state.stateTransitions === undefined ? undefined :
+                        <Grid item>
+                            <StateTransitionTable classes={classes} stateTransitions={this.state.stateTransitions}/>
+                        </Grid>
+                    }
                 </Grid>
             </MuiThemeProvider>
         );
