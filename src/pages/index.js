@@ -170,99 +170,87 @@ class InputTable extends React.Component {
     }
 }
 
-class MooreTable extends React.Component {
-    static fromRaw(rawTable) {
-        let table = JSON.parse(JSON.stringify(rawTable));
-
-        // insert equalityclass
-        table.forEach(row => row.splice(row.length - 1, 0, row[row.length - 1]));
-
-        this.stableSortByClass(table);
-
-        table = table.map(row => row
-            .map((cell, index) => (index === 0 || index >= row.length - 2) ?
-                cell : [cell, table.find(row => row[0] === cell)[row.length - 1]]));
-
-        return <MooreTable table={table}/>;
+class States {
+    static fromRawTable(rawTable) {
+        const states = JSON.parse(JSON.stringify(rawTable))
+            .map(rawRow => ({
+                number: rawRow[0],
+                output: rawRow[rawRow.length - 1],
+                equivalencePartition: rawRow[rawRow.length - 1],
+                nextStates: rawRow.slice(1, rawRow.length - 1).map(cell => ({number: cell})),
+            }));
+        this.sort(states);
+        this.applyEquivalencePartitions(states);
+        return states;
     }
 
-    static stableSortByClass(table) {
-        table.forEach((row, index) => row.index = index);
-        table.sort((row1, row2) => {
-            if (row1[row1.length - 2] === row2[row2.length - 2])
-                return row1.index - row2.index;
-            else
-                return row1[row1.length - 2] - row2[row2.length - 2];
+    static applyEquivalencePartitions(states) {
+        states.forEach((state, index, states) =>
+            state.nextStates.forEach(state =>
+                state.equivalencePartition = states.find(nextState => nextState.number === state.number).equivalencePartition));
+    }
+
+    static sort(states) {
+        states.forEach((state, index) => state.tmp = index);
+        states.sort((state1, state2) => {
+            const equivalencePartitionDifference = state1.equivalencePartition - state2.equivalencePartition;
+            return equivalencePartitionDifference !== 0 ? equivalencePartitionDifference : state1.tmp - state2.tmp;
         });
     }
 
-    static optimize(mooreTable) {
-        let steps = [mooreTable];
-        while (!this.isOptimal(steps[steps.length - 1]))
-            steps.push(this.step(steps[steps.length - 1]));
-        return steps;
+    static getHighestEquivalencePartition(states) {
+        return states[states.length - 1].equivalencePartition;
     }
 
-    static isOptimal(mooreTable) {
-        const length = mooreTable.props.table[mooreTable.props.table.length - 1][mooreTable.props.table[mooreTable.props.table.length - 1].length - 2];
-        return Array.from({length: length}, (v, k) => k + 1)
-            .map(equalityClass => mooreTable.props.table.filter(row => row[row.length - 2] === equalityClass))
+    static isOptimal(states) {
+        return Array.from({length: this.getHighestEquivalencePartition(states)}, (v, k) => k + 1)
+            .map(equivalencePartition => states.filter(state => state.equivalencePartition === equivalencePartition))
             .every(group => group.slice(1)
-                .every(row => row.slice(1, row.length - 2)
-                    .every((pair, index) => pair[1] === group[0].slice(1, group[0].length - 2)[index][1])));
+                .every(state => state.nextStates
+                    .every((state, index) => state.equivalencePartition === group[0].nextStates[index].equivalencePartition)));
     }
 
-    static step(mooreTable) {
-        let table = Array.from({length: mooreTable.props.table[mooreTable.props.table.length - 1][mooreTable.props.table[0].length - 2]}, (v, k) => k + 1)
-            .map(i => JSON.parse(JSON.stringify(this.groupByGoodness(mooreTable.props.table.filter(row => row[row.length - 2] === i)))))
-            .reduce((acc, val) => acc.concat(val), [])      // TODO: Array.prototype.flatMap()
-            .map((group, index) => group.map(row => {
-                row[row.length - 2] = index + 1;
-                return row;
-            }))
-            .reduce((acc, val) => acc.concat(val), [])      // TODO: Array.prototype.flatMap()
-            .map((row, index, table) => row
-                .map(cell => (cell.length > 1) ?
-                    [cell[0], table.find(row => row[0] === cell[0])[row.length - 2]] : cell));
-
-        this.stableSortByClass(table);
-
-        return <MooreTable table={table}/>;
-    };
-
-    static groupByGoodness(rows) {
-        const firstEqualityClasses = rows[0].slice(1, rows[0].length - 2);
-        const good = rows.filter(row => row.slice(1, row.length - 2).every((pair, index) => pair[1] === firstEqualityClasses[index][1]));
-        const bad = rows.filter(row => row.slice(1, row.length - 2).some((pair, index) => pair[1] !== firstEqualityClasses[index][1]));
-        return bad.length === 0 ? [good] : [good].concat(this.groupByGoodness(bad));
+    static regroup(states) {
+        const sameGroupAsFirst = states.filter((state, index, states) => state.nextStates.every((state, index) => state.equivalencePartition === states[0].nextStates[index].equivalencePartition));
+        const notSameGroupAsFirst = states.filter((state, index, states) => state.nextStates.some((state, index) => state.equivalencePartition !== states[0].nextStates[index].equivalencePartition));
+        return notSameGroupAsFirst.length === 0 ? [sameGroupAsFirst] : [sameGroupAsFirst].concat(this.regroup(notSameGroupAsFirst));
     }
 
+    static step(states) {
+        const groups = Array.from({length: this.getHighestEquivalencePartition(states)}, (v, k) => k + 1)
+            .map(equivalencePartition => JSON.parse(JSON.stringify(States.regroup(states.filter(state => state.equivalencePartition === equivalencePartition)))))
+            .reduce((acc, val) => acc.concat(val), []);                         // TODO: Array.prototype.flatMap()
+        groups.forEach((group, index) => group.forEach(state => state.equivalencePartition = index + 1));
+        const nextStates = groups.reduce((acc, val) => acc.concat(val), []);    // TODO: Array.prototype.flatMap()
+        this.sort(nextStates);
+        this.applyEquivalencePartitions(nextStates);
+        return nextStates;
+    }
+
+    static reductionSteps(states) {
+        return this.isOptimal(states) ? [states] : [states].concat(this.reductionSteps(this.step(states)));
+    }
+}
+
+class StateTransitionTable extends React.Component {
     render() {
         return (
             <table cellPadding="4" cellSpacing="3">
                 <thead>
                 <tr>
                     <th>States</th>
-                    {Array.from({length: this.props.table[0].length - 3}, (v, k) => <th>X{k}</th>)}
+                    {Array.from({length: this.props.states[0].nextStates.length}, (v, k) => <th>X{k}</th>)}
                     <th>Classes</th>
                     <th>Output</th>
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.table.map(row => (
+                {this.props.states.map(state => (
                     <tr>
-                        {row.map((cell, index, row) => {
-                            let tableData;
-                            if (index === 0)
-                                tableData = "Z" + cell;
-                            else if (index === row.length - 2)
-                                tableData = "K" + cell;
-                            else if (index === row.length - 1)
-                                tableData = "Y" + cell;
-                            else
-                                tableData = "Z" + cell[0] + " - K" + cell[1];
-                            return <td>{tableData}</td>
-                        })}
+                        <td>Z{state.number}</td>
+                        {state.nextStates.map(state => <td>Z{state.number} - K{state.equivalencePartition}</td>)}
+                        <td>K{state.equivalencePartition}</td>
+                        <td>Y{state.output}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -278,14 +266,12 @@ class Simplifier extends React.Component {
         this.simplify = this.simplify.bind(this);
     }
 
-    simplify(tableau) {
-        let table = MooreTable.fromRaw(tableau);
-
-        let steps = MooreTable.optimize(table);
-        steps.forEach(table => console.log(MooreTable.isOptimal(table)));
+    simplify(rawTable) {
+        const reductionSteps = States.reductionSteps(States.fromRawTable(rawTable));
+        const stateTransitionTables = reductionSteps.map(step => <StateTransitionTable states={step}/>);
 
         this.setState({
-            result: steps,
+            result: stateTransitionTables,
         });
     }
 
