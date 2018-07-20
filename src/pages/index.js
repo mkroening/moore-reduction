@@ -41,19 +41,17 @@ class InputRow extends React.Component {
     }
 
     render() {
-        const states = Array.from({length: this.props.destStateCount}, (v, k) => (
-            <td>
-                <label>Z</label>
-                <input onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}
-                       value={this.props.value[k + 1]}
-                       size="1"/>
-            </td>
-        ));
-
         return (
             <tr>
                 <th>Z{this.props.index + 1}</th>
-                {states}
+                {Array.from({length: this.props.destStateCount}, (v, k) => (
+                    <td>
+                        <label>Z</label>
+                        <input onChange={evt => this.props.onChange(this.props.index, k, parseInt(evt.target.value, 10))}
+                               value={this.props.value[k + 1]}
+                               size="1"/>
+                    </td>
+                ))}
                 <td>
                     <label>Y</label>
                     <input
@@ -87,7 +85,7 @@ class InputTable extends React.Component {
         this.state = {
             stateCount: defaultStateCount,
             inputCount: defaultInputCount,
-            table: defaultArray, //Array.from({length: defaultStateCount}, (v, k) => Array.from({length: defaultInputCount + 2}, (v2, k2) => k2 === 0 ? k : undefined)),
+            table: defaultArray,
         };
         this.setDestinationStates = this.setDestinationStates.bind(this);
     }
@@ -106,7 +104,7 @@ class InputTable extends React.Component {
     }
 
     setInputCount(i) {
-        let newTable = this.state.table.slice();
+        const newTable = this.state.table.slice();
         if (i < this.state.inputCount)
             newTable.forEach(row => row.splice(i + 1, this.state.inputCount - i));
         else if (i > this.state.inputCount)
@@ -118,7 +116,7 @@ class InputTable extends React.Component {
     }
 
     setDestinationStates(state, input, destinationState) {
-        let table = this.state.table;
+        const table = this.state.table;
         table[state][input + 1] = destinationState;
         this.setState({
             table: table,
@@ -126,19 +124,6 @@ class InputTable extends React.Component {
     }
 
     render() {
-        const inputHeader = Array.from({length: this.state.inputCount}, (v, k) => (
-            <th>X{k}</th>
-        ));
-
-        const rows = Array.from({length: this.state.stateCount}, (v, k) => (
-            <InputRow
-                index={k}
-                value={this.state.table[k]}
-                destStateCount={this.state.inputCount}
-                onChange={this.setDestinationStates}
-            />
-        ));
-
         return (
             <div>
                 <Counter
@@ -156,12 +141,19 @@ class InputTable extends React.Component {
                     <thead>
                     <tr>
                         <th>States</th>
-                        {inputHeader}
+                        {Array.from({length: this.state.inputCount}, (v, k) => <th>X{k}</th>)}
                         <th>Output</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {rows}
+                    {Array.from({length: this.state.stateCount}, (v, k) => (
+                        <InputRow
+                            index={k}
+                            value={this.state.table[k]}
+                            destStateCount={this.state.inputCount}
+                            onChange={this.setDestinationStates}
+                        />
+                    ))}
                     </tbody>
                 </table>
                 <button onClick={() => this.props.onSubmit(this.state.table)}/>
@@ -262,16 +254,15 @@ class StateTransitionTable extends React.Component {
 class Simplifier extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            reductionSteps: [],
+        };
         this.simplify = this.simplify.bind(this);
     }
 
     simplify(rawTable) {
-        const reductionSteps = States.reductionSteps(States.fromRawTable(rawTable));
-        const stateTransitionTables = reductionSteps.map(step => <StateTransitionTable states={step}/>);
-
         this.setState({
-            result: stateTransitionTables,
+            reductionSteps: States.reductionSteps(States.fromRawTable(rawTable)),
         });
     }
 
@@ -279,7 +270,7 @@ class Simplifier extends React.Component {
         return (
             <div>
                 <InputTable onSubmit={this.simplify}/>
-                {this.state.result}
+                {this.state.reductionSteps.map(step => <StateTransitionTable states={step}/>)}
             </div>
         )
     }
