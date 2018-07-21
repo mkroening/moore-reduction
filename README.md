@@ -2,7 +2,7 @@
 
 A static web application to execute the [Moore reduction procedure](https://en.wikipedia.org/wiki/Moore_reduction_procedure)
 
-Used projects:
+## Built with
 * [React](https://reactjs.org/)
     * A JavaScript library for building user interfaces
 * [Gatsby](https://www.gatsbyjs.org/)
