@@ -11,4 +11,3 @@ A static web application to execute the [Moore reduction procedure](https://en.w
     * React components that implement Google's Material Design.
 * [react-katex](https://github.com/talyssonoc/react-katex)
     * Display math expressions with KaTeX and React
-
