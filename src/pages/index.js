@@ -169,10 +169,10 @@ class InputTable extends React.Component {
                     <div className={classes.spacer}/>
                     <TextField label={"States"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
                                value={stateCount}
-                               onChange={evt => this.handleStateCountChange(parseInt(evt.target.value))}/>
+                               onChange={evt => this.handleStateCountChange(parseInt(evt.target.value, 10))}/>
                     <TextField label={"Inputs"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
                                value={inputCount}
-                               onChange={evt => this.handleInputCountChange(parseInt(evt.target.value))}/>
+                               onChange={evt => this.handleInputCountChange(parseInt(evt.target.value, 10))}/>
                     <div className={classes.spacer}/>
                     <Button variant="contained" color="primary"
                             onClick={() => onSubmit(table)}>Reduce</Button>
