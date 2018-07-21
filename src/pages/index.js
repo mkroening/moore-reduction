@@ -16,7 +16,9 @@ import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import {MuiThemeProvider, createMuiTheme, withStyles} from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const theme = createMuiTheme({
     typography: {
