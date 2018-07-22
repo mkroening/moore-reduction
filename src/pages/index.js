@@ -410,7 +410,7 @@ class Simplifier extends React.Component {
         const {reductionSteps, reducedStates} = this.state;
         return (
             <MuiThemeProvider theme={theme}>
-                <Grid container spacing="16" justify="center">
+                <Grid container spacing={16} justify="center">
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
                     <CssBaseline/>
                     <Grid item>
