@@ -13,5 +13,9 @@
     "gatsby-link": "^1.6.40",
     "react": "^16.4.1",
     "react-katex": "^2.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "eslint-plugin-react": "^7.10.0"
   }
 }
