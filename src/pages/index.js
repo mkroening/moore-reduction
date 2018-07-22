@@ -41,19 +41,19 @@ class Simplifier extends React.Component {
         const {reductionSteps, reducedStates} = this.state;
         return (
             <MuiThemeProvider theme={theme}>
-                <Grid container spacing={16} justify="center">
+                <Grid style={{ padding: 20 }} container spacing={16} alignItems={'center'} justify={'center'}>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
                     <CssBaseline/>
-                    <Grid item>
+                    <Grid xs item>
                         <InputTable onSubmit={this.simplify}/>
                     </Grid>
                     {reductionSteps.map(step =>
-                        <Grid key={step.equivalence.toString()} item>
+                        <Grid key={step.equivalence.toString()} xs item>
                             <EquivalencePartitionTable states={step}/>
                         </Grid>
                     )}
                     {reducedStates === undefined ? undefined :
-                        <Grid item>
+                        <Grid xs item>
                             <StateTransitionTable states={reducedStates}/>
                         </Grid>
                     }
