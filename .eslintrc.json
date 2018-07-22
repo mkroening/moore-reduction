@@ -21,6 +21,10 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/jsx-closing-bracket-location" : "error",
+    "indent": [
+      "error",
+      4
+    ],
     "linebreak-style": [
       "error",
       "unix"

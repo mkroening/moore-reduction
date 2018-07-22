@@ -130,16 +130,16 @@ class InputTable extends React.Component {
                     </Typography>
                     <div className={classes.spacer}/>
                     <TextField label="States" type="number" margin="normal" className={classes.toolbarNumberField}
-                               value={stateCount} onSelect={evt => evt.target.select()}
-                               onChange={evt => this.handleStateCountChange(parseInt(evt.target.value, 10))}
+                        value={stateCount} onSelect={evt => evt.target.select()}
+                        onChange={evt => this.handleStateCountChange(parseInt(evt.target.value, 10))}
                     />
                     <TextField label="Inputs" type="number" margin="normal" className={classes.toolbarNumberField}
-                               value={inputCount} onSelect={evt => evt.target.select()}
-                               onChange={evt => this.handleInputCountChange(parseInt(evt.target.value, 10))}
+                        value={inputCount} onSelect={evt => evt.target.select()}
+                        onChange={evt => this.handleInputCountChange(parseInt(evt.target.value, 10))}
                     />
                     <div className={classes.spacer}/>
                     <Button variant="contained" color="primary"
-                            onClick={() => onSubmit(table)}
+                        onClick={() => onSubmit(table)}
                     >Reduce</Button>
                 </Toolbar>
                 <Table>
@@ -157,8 +157,8 @@ class InputTable extends React.Component {
                     <TableBody>
                         {Array.from({length: stateCount}, (v, k) =>
                             <InputRow key={k.toString()}
-                                      values={table[k]}
-                                      onChange={this.handleNextStateChange}
+                                values={table[k]}
+                                onChange={this.handleNextStateChange}
                             />
                         )}
                     </TableBody>
