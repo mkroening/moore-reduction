@@ -14,7 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import States from './States';
+import States from '../../utils/States';
 
 class StateTransitionTable extends React.Component {
     static reduceStates(states) {

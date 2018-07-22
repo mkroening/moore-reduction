@@ -8,10 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
-import EquivalencePartitionTable from './EquivalencePartitionTable';
-import InputTable from './InputTable';
-import States from './States';
-import StateTransitionTable from'./StateTransitionTable';
+import EquivalencePartitionTable from '../components/output/EquivalencePartitionTable';
+import InputTable from '../components/input/InputTable';
+import States from '../utils/States';
+import StateTransitionTable from '../components/output/StateTransitionTable';
 
 const theme = createMuiTheme({
     typography: {
