@@ -26,7 +26,7 @@ const theme = createMuiTheme({
     },
 });
 
-const styles = theme => ({
+const styles = ({
     numberField: {
         width: 40,
     },
@@ -269,7 +269,7 @@ class States {
 
 class EquivalencePartitionTable extends React.Component {
     render() {
-        const {states, classes} = this.props;
+        const {states} = this.props;
         return (
             <Paper>
                 <Toolbar>
@@ -323,7 +323,7 @@ class StateTransitionTable extends React.Component {
     }
 
     render() {
-        const {states, classes} = this.props;
+        const {states} = this.props;
         return (
             <Paper>
                 <Toolbar>
@@ -397,12 +397,12 @@ class Simplifier extends React.Component {
                     </Grid>
                     {reductionSteps.map(step =>
                         <Grid item>
-                            <EquivalencePartitionTable classes={classes} states={step}/>
+                            <EquivalencePartitionTable states={step}/>
                         </Grid>
                     )}
                     {reducedStates === undefined ? undefined :
                         <Grid item>
-                            <StateTransitionTable classes={classes} states={reducedStates}/>
+                            <StateTransitionTable states={reducedStates}/>
                         </Grid>
                     }
                 </Grid>
