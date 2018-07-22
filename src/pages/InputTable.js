@@ -48,7 +48,7 @@ class InputTable extends React.Component {
         this.state = {
             table: defaultTable,
         };
-        this.handleNextStateChange = this.handleNextStateChange.bind(this);
+        this.handleCellChange = this.handleCellChange.bind(this);
     }
 
     handleStateCountChange(newStateCount) {
@@ -100,17 +100,17 @@ class InputTable extends React.Component {
         }
     }
 
-    handleNextStateChange(state, input, nextState) {
+    handleCellChange(row, column, value) {
         const {table} = this.state;
-        if (isNaN(nextState))
-            nextState = table[state - 1][input + 1];
-        else if (nextState > table.length)
-            nextState = table.length;
-        else if (nextState < 1)
-            nextState = 1;
-        if (table[state - 1][input + 1] !== nextState) {
+        if (isNaN(value))
+            value = table[row][column];
+        else if (value > table.length)
+            value = table.length;
+        else if (value < 1)
+            value = 1;
+        if (table[row][column] !== value) {
             const newTable = JSON.parse(JSON.stringify(table));
-            newTable[state - 1][input + 1] = nextState;
+            newTable[row][column] = value;
             this.setState({
                 table: newTable,
             });
@@ -157,8 +157,9 @@ class InputTable extends React.Component {
                     <TableBody>
                         {Array.from({length: stateCount}, (v, k) =>
                             <InputRow key={k.toString()}
+                                index={k}
                                 values={table[k]}
-                                onChange={this.handleNextStateChange}
+                                onChange={this.handleCellChange}
                             />
                         )}
                     </TableBody>
