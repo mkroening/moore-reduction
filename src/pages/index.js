@@ -51,7 +51,7 @@ class InputRow extends React.Component {
                     <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
                 </TableCell>
                 {Array.from({length: inputCount}, (v, k) => (
-                    <TableCell key={k} padding={'dense'}>
+                    <TableCell key={k.toString()} padding={'dense'}>
                         <InlineMath>Z</InlineMath>
                         <TextField type={'number'} className={classes.numberField}
                                    value={values[k + 1]} onSelect={evt => evt.target.select()}
@@ -190,7 +190,7 @@ class InputTable extends React.Component {
                         <TableRow>
                             <TableCell padding={'dense'}>State</TableCell>
                             {Array.from({length: inputCount}, (v, k) =>
-                                <TableCell key={k} padding={'dense'}>
+                                <TableCell key={k.toString()} padding={'dense'}>
                                     <InlineMath>{String.raw`X_${k}`}</InlineMath>
                                 </TableCell>
                             )}
@@ -199,7 +199,7 @@ class InputTable extends React.Component {
                     </TableHead>
                     <TableBody>
                         {Array.from({length: stateCount}, (v, k) =>
-                            <InputRow key={k}
+                            <InputRow key={k.toString()}
                                 classes={classes}
                                 values={table[k]}
                                 onChange={this.handleNextStateChange}/>
@@ -295,7 +295,7 @@ class EquivalencePartitionTable extends React.Component {
                         <TableRow>
                             <TableCell padding={'dense'}>State</TableCell>
                             {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                <TableCell key={k} padding={'dense'}>
+                                <TableCell key={k.toString()} padding={'dense'}>
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
@@ -305,12 +305,12 @@ class EquivalencePartitionTable extends React.Component {
                     </TableHead>
                     <TableBody>
                         {states.map((state, index, states) =>
-                            <TableRow key={state.number}>
+                            <TableRow key={state.number.toString()}>
                                 <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map(state =>
-                                    <TableCell key={state.number} padding={'dense'}>
+                                    <TableCell key={state.number.toString()} padding={'dense'}>
                                         <InlineMath>{String.raw`Z_{${state.number}} - K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                     </TableCell>
                                 )}
@@ -353,7 +353,7 @@ class StateTransitionTable extends React.Component {
                         <TableRow>
                             <TableCell padding={'dense'}>State</TableCell>
                             {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                <TableCell key={k} padding={'dense'}>
+                                <TableCell key={k.toString()} padding={'dense'}>
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
@@ -362,12 +362,12 @@ class StateTransitionTable extends React.Component {
                     </TableHead>
                     <TableBody>
                         {states.map(state => (
-                            <TableRow key={state.number}>
+                            <TableRow key={state.number.toString()}>
                                 <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map(state =>
-                                    <TableCell key={state.number} padding={'dense'}>
+                                    <TableCell key={state.number.toString()} padding={'dense'}>
                                         <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                     </TableCell>
                                 )}
@@ -417,7 +417,7 @@ class Simplifier extends React.Component {
                         <InputTable classes={classes} onSubmit={this.simplify}/>
                     </Grid>
                     {reductionSteps.map(step =>
-                        <Grid key={step.equivalence} item>
+                        <Grid key={step.equivalence.toString()} item>
                             <EquivalencePartitionTable states={step}/>
                         </Grid>
                     )}
