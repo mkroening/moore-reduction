@@ -21,6 +21,7 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "react/jsx-closing-bracket-location" : "error",
+    "react/jsx-no-bind": "error",
     "indent": [
       "error",
       4
