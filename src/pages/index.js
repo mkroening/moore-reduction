@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "katex/dist/katex.min.css";
-import {InlineMath} from "react-katex";
+import 'katex/dist/katex.min.css';
+import {InlineMath} from 'react-katex';
 
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import withStyles from "@material-ui/core/styles/withStyles";
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const theme = createMuiTheme({
     typography: {
@@ -36,7 +36,7 @@ const styles = ({
         width: 50,
     },
     spacer: {
-        flex: "auto",
+        flex: 'auto',
     },
 });
 
@@ -47,20 +47,20 @@ class InputRow extends React.Component {
         const stateNumber = values[0];
         return (
             <TableRow>
-                <TableCell padding={"dense"}>
+                <TableCell padding={'dense'}>
                     <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
                 </TableCell>
                 {Array.from({length: inputCount}, (v, k) => (
-                    <TableCell key={k} padding={"dense"}>
+                    <TableCell key={k} padding={'dense'}>
                         <InlineMath>Z</InlineMath>
-                        <TextField type={"number"} className={classes.numberField}
+                        <TextField type={'number'} className={classes.numberField}
                                    value={values[k + 1]} onSelect={evt => evt.target.select()}
                                    onChange={evt => onChange(stateNumber, k, parseInt(evt.target.value, 10))}/>
                     </TableCell>
                 ))}
-                <TableCell padding={"dense"}>
+                <TableCell padding={'dense'}>
                     <InlineMath>Y</InlineMath>
-                    <TextField type={"number"} className={classes.numberField}
+                    <TextField type={'number'} className={classes.numberField}
                                value={values[values.length - 1]} onSelect={evt => evt.target.select()}
                                onChange={evt => onChange(stateNumber, inputCount, parseInt(evt.target.value, 10))}/>
                 </TableCell>
@@ -171,14 +171,14 @@ class InputTable extends React.Component {
         return (
             <Paper>
                 <Toolbar>
-                    <Typography variant={"title"}>
+                    <Typography variant={'title'}>
                         Input
                     </Typography>
                     <div className={classes.spacer}/>
-                    <TextField label={"States"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
+                    <TextField label={'States'} type={'number'} margin={'normal'} className={classes.toolbarNumberField}
                                value={stateCount} onSelect={evt => evt.target.select()}
                                onChange={evt => this.handleStateCountChange(parseInt(evt.target.value, 10))}/>
-                    <TextField label={"Inputs"} type={"number"} margin={"normal"} className={classes.toolbarNumberField}
+                    <TextField label={'Inputs'} type={'number'} margin={'normal'} className={classes.toolbarNumberField}
                                value={inputCount} onSelect={evt => evt.target.select()}
                                onChange={evt => this.handleInputCountChange(parseInt(evt.target.value, 10))}/>
                     <div className={classes.spacer}/>
@@ -188,13 +188,13 @@ class InputTable extends React.Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell padding={"dense"}>State</TableCell>
+                            <TableCell padding={'dense'}>State</TableCell>
                             {Array.from({length: inputCount}, (v, k) =>
-                                <TableCell key={k} padding={"dense"}>
+                                <TableCell key={k} padding={'dense'}>
                                     <InlineMath>{String.raw`X_${k}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell padding={"dense"}>Output</TableCell>
+                            <TableCell padding={'dense'}>Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -286,38 +286,38 @@ class EquivalencePartitionTable extends React.Component {
         return (
             <Paper>
                 <Toolbar>
-                    <Typography variant={"title"}>
+                    <Typography variant={'title'}>
                         {states.equivalence}-Distinguishable States
                     </Typography>
                 </Toolbar>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell padding={"dense"}>State</TableCell>
+                            <TableCell padding={'dense'}>State</TableCell>
                             {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                <TableCell key={k} padding={"dense"}>
+                                <TableCell key={k} padding={'dense'}>
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell padding={"dense"}>Partition</TableCell>
-                            <TableCell padding={"dense"}>Output</TableCell>
+                            <TableCell padding={'dense'}>Partition</TableCell>
+                            <TableCell padding={'dense'}>Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {states.map((state, index, states) =>
                             <TableRow key={state.number}>
-                                <TableCell padding={"dense"}>
+                                <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map(state =>
-                                    <TableCell key={state.number} padding={"dense"}>
+                                    <TableCell key={state.number} padding={'dense'}>
                                         <InlineMath>{String.raw`Z_{${state.number}} - K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding={"dense"}>
+                                <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                 </TableCell>
-                                <TableCell padding={"dense"}>
+                                <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                 </TableCell>
                             </TableRow>
@@ -344,34 +344,34 @@ class StateTransitionTable extends React.Component {
         return (
             <Paper>
                 <Toolbar>
-                    <Typography variant={"title"}>
+                    <Typography variant={'title'}>
                         Reduced Machine
                     </Typography>
                 </Toolbar>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell padding={"dense"}>State</TableCell>
+                            <TableCell padding={'dense'}>State</TableCell>
                             {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                <TableCell key={k} padding={"dense"}>
+                                <TableCell key={k} padding={'dense'}>
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell padding={"dense"}>Output</TableCell>
+                            <TableCell padding={'dense'}>Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {states.map(state => (
                             <TableRow key={state.number}>
-                                <TableCell padding={"dense"}>
+                                <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map(state =>
-                                    <TableCell key={state.number} padding={"dense"}>
+                                    <TableCell key={state.number} padding={'dense'}>
                                         <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding={"dense"}>
+                                <TableCell padding={'dense'}>
                                     <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                 </TableCell>
                             </TableRow>
@@ -410,7 +410,7 @@ class Simplifier extends React.Component {
         const {reductionSteps, reducedStates} = this.state;
         return (
             <MuiThemeProvider theme={theme}>
-                <Grid container spacing={16} justify={"center"}>
+                <Grid container spacing={16} justify={'center'}>
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
                     <CssBaseline/>
                     <Grid item>
