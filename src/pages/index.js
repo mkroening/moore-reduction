@@ -75,6 +75,8 @@ InputRow.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+const InputRowStyled = withStyles(styles)(InputRow);
+
 class InputTable extends React.Component {
     constructor(props) {
         super(props);
@@ -199,8 +201,7 @@ class InputTable extends React.Component {
                     </TableHead>
                     <TableBody>
                         {Array.from({length: stateCount}, (v, k) =>
-                            <InputRow key={k.toString()}
-                                classes={classes}
+                            <InputRowStyled key={k.toString()}
                                 values={table[k]}
                                 onChange={this.handleNextStateChange}/>
                         )}
@@ -215,6 +216,8 @@ InputTable.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
 };
+
+const InputTableStyled = withStyles(styles)(InputTable);
 
 class States {
     static fromRawTable(rawTable) {
@@ -406,7 +409,6 @@ class Simplifier extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
         const {reductionSteps, reducedStates} = this.state;
         return (
             <MuiThemeProvider theme={theme}>
@@ -414,7 +416,7 @@ class Simplifier extends React.Component {
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
                     <CssBaseline/>
                     <Grid item>
-                        <InputTable classes={classes} onSubmit={this.simplify}/>
+                        <InputTableStyled onSubmit={this.simplify}/>
                     </Grid>
                     {reductionSteps.map(step =>
                         <Grid key={step.equivalence.toString()} item>
@@ -432,8 +434,4 @@ class Simplifier extends React.Component {
     }
 }
 
-Simplifier.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Simplifier);
+export default Simplifier;
