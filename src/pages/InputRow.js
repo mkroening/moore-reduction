@@ -32,14 +32,16 @@ class InputRow extends React.Component {
                         <InlineMath>Z</InlineMath>
                         <TextField type="number" className={classes.numberField}
                                    value={values[k + 1]} onSelect={evt => evt.target.select()}
-                                   onChange={evt => onChange(stateNumber, k, parseInt(evt.target.value, 10))}/>
+                                   onChange={evt => onChange(stateNumber, k, parseInt(evt.target.value, 10))}
+                        />
                     </TableCell>
                 ))}
                 <TableCell padding="dense">
                     <InlineMath>Y</InlineMath>
                     <TextField type="number" className={classes.numberField}
                                value={values[values.length - 1]} onSelect={evt => evt.target.select()}
-                               onChange={evt => onChange(stateNumber, inputCount, parseInt(evt.target.value, 10))}/>
+                               onChange={evt => onChange(stateNumber, inputCount, parseInt(evt.target.value, 10))}
+                    />
                 </TableCell>
             </TableRow>
         );
