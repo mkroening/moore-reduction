@@ -49,8 +49,8 @@ class StateTransitionTable extends React.Component {
                                 <TableCell padding="dense">
                                     <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                 </TableCell>
-                                {state.nextStates.map(state =>
-                                    <TableCell key={state.number.toString()} padding="dense">
+                                {state.nextStates.map((state, index) =>
+                                    <TableCell key={index.toString()} padding="dense">
                                         <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                     </TableCell>
                                 )}
