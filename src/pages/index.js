@@ -1,5 +1,7 @@
 import React from "react";
 
+import PropTypes from "prop-types";
+
 import "katex/dist/katex.min.css";
 import {InlineMath} from "react-katex";
 
@@ -66,6 +68,12 @@ class InputRow extends React.Component {
         );
     }
 }
+
+InputRow.propTypes = {
+    values: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+};
 
 class InputTable extends React.Component {
     constructor(props) {
@@ -203,6 +211,11 @@ class InputTable extends React.Component {
     }
 }
 
+InputTable.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+};
+
 class States {
     static fromRawTable(rawTable) {
         const states = JSON.parse(JSON.stringify(rawTable))
@@ -316,6 +329,10 @@ class EquivalencePartitionTable extends React.Component {
     }
 }
 
+EquivalencePartitionTable.propTypes = {
+    states: PropTypes.array.isRequired,
+};
+
 class StateTransitionTable extends React.Component {
     static reduceStates(states) {
         return Array.from({length: States.getHighestEquivalencePartition(states)}, (v, k) => k + 1)
@@ -366,6 +383,10 @@ class StateTransitionTable extends React.Component {
     }
 }
 
+StateTransitionTable.propTypes = {
+    states: PropTypes.array.isRequired,
+};
+
 class Simplifier extends React.Component {
     constructor(props) {
         super(props);
@@ -410,5 +431,9 @@ class Simplifier extends React.Component {
         );
     }
 }
+
+Simplifier.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(Simplifier);
