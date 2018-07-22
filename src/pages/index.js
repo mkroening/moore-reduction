@@ -22,6 +22,8 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import InputRow from './InputRow';
+
 const theme = createMuiTheme({
     typography: {
         fontSize: 18,
@@ -29,9 +31,6 @@ const theme = createMuiTheme({
 });
 
 const styles = ({
-    numberField: {
-        width: 40,
-    },
     toolbarNumberField: {
         width: 50,
     },
@@ -39,43 +38,6 @@ const styles = ({
         flex: 'auto',
     },
 });
-
-class InputRow extends React.Component {
-    render() {
-        const {values, onChange, classes} = this.props;
-        const inputCount = values.length - 2;
-        const stateNumber = values[0];
-        return (
-            <TableRow>
-                <TableCell padding="dense">
-                    <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
-                </TableCell>
-                {Array.from({length: inputCount}, (v, k) => (
-                    <TableCell key={k.toString()} padding="dense">
-                        <InlineMath>Z</InlineMath>
-                        <TextField type="number" className={classes.numberField}
-                                   value={values[k + 1]} onSelect={evt => evt.target.select()}
-                                   onChange={evt => onChange(stateNumber, k, parseInt(evt.target.value, 10))}/>
-                    </TableCell>
-                ))}
-                <TableCell padding="dense">
-                    <InlineMath>Y</InlineMath>
-                    <TextField type="number" className={classes.numberField}
-                               value={values[values.length - 1]} onSelect={evt => evt.target.select()}
-                               onChange={evt => onChange(stateNumber, inputCount, parseInt(evt.target.value, 10))}/>
-                </TableCell>
-            </TableRow>
-        );
-    }
-}
-
-InputRow.propTypes = {
-    values: PropTypes.array.isRequired,
-    onChange: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
-};
-
-const InputRowStyled = withStyles(styles)(InputRow);
 
 class InputTable extends React.Component {
     constructor(props) {
@@ -201,9 +163,9 @@ class InputTable extends React.Component {
                     </TableHead>
                     <TableBody>
                         {Array.from({length: stateCount}, (v, k) =>
-                            <InputRowStyled key={k.toString()}
-                                values={table[k]}
-                                onChange={this.handleNextStateChange}/>
+                            <InputRow key={k.toString()}
+                                      values={table[k]}
+                                      onChange={this.handleNextStateChange}/>
                         )}
                     </TableBody>
                 </Table>
