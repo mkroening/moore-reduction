@@ -29,6 +29,10 @@ const styles = ({
     },
 });
 
+const handleSelect = evt => {
+    evt.target.select();
+};
+
 class InputTable extends React.Component {
     constructor(props) {
         super(props);
@@ -49,9 +53,13 @@ class InputTable extends React.Component {
             table: defaultTable,
         };
         this.handleCellChange = this.handleCellChange.bind(this);
+        this.handleStateCountChange = this.handleStateCountChange.bind(this);
+        this.handleInputCountChange = this.handleInputCountChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleStateCountChange(newStateCount) {
+    handleStateCountChange(evt) {
+        let newStateCount = parseInt(evt.target.value, 10);
         const {table} = this.state;
         const stateCount = table.length;
         const inputCount = table[0].length - 2;
@@ -79,7 +87,8 @@ class InputTable extends React.Component {
         }
     }
 
-    handleInputCountChange(newInputCount) {
+    handleInputCountChange(evt) {
+        let newInputCount = parseInt(evt.target.value, 10);
         const {table} = this.state;
         const inputCount = table[0].length - 2;
         if (isNaN(newInputCount))
@@ -117,8 +126,14 @@ class InputTable extends React.Component {
         }
     }
 
+    handleSubmit() {
+        const {onSubmit} = this.props;
+        const {table} = this.state;
+        onSubmit(table);
+    }
+
     render() {
-        const {onSubmit, classes} = this.props;
+        const {classes} = this.props;
         const {table} = this.state;
         const stateCount = table.length;
         const inputCount = table[0].length - 2;
@@ -130,16 +145,16 @@ class InputTable extends React.Component {
                     </Typography>
                     <div className={classes.spacer}/>
                     <TextField label="States" type="number" margin="normal" className={classes.toolbarNumberField}
-                        value={stateCount} onSelect={evt => evt.target.select()}
-                        onChange={evt => this.handleStateCountChange(parseInt(evt.target.value, 10))}
+                        value={stateCount} onSelect={handleSelect}
+                        onChange={this.handleStateCountChange}
                     />
                     <TextField label="Inputs" type="number" margin="normal" className={classes.toolbarNumberField}
-                        value={inputCount} onSelect={evt => evt.target.select()}
-                        onChange={evt => this.handleInputCountChange(parseInt(evt.target.value, 10))}
+                        value={inputCount} onSelect={handleSelect}
+                        onChange={this.handleInputCountChange}
                     />
                     <div className={classes.spacer}/>
                     <Button variant="contained" color="primary"
-                        onClick={() => onSubmit(table)}
+                        onClick={this.handleSubmit}
                     >Reduce</Button>
                 </Toolbar>
                 <Table>
