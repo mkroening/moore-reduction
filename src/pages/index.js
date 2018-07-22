@@ -11,7 +11,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import EquivalencePartitionTable from './EquivalencePartitionTable';
 import InputTable from './InputTable';
 import States from './States';
-import StateTransitionTable from'./StateTransitionTable'
+import StateTransitionTable from'./StateTransitionTable';
 
 const theme = createMuiTheme({
     typography: {
