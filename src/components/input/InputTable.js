@@ -163,7 +163,7 @@ class InputTable extends React.Component {
                             <TableCell padding="checkbox">State</TableCell>
                             {Array.from({length: inputCount}, (v, k) =>
                                 <TableCell key={k.toString()} padding="checkbox">
-                                    <InlineMath>{String.raw`X_${k}`}</InlineMath>
+                                    <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
                             <TableCell padding="checkbox">Output</TableCell>
