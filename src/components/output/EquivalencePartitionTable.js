@@ -45,7 +45,7 @@ class EquivalencePartitionTable extends React.Component {
                                 </TableCell>
                                 {state.nextStates.map((state, index) =>
                                     <TableCell key={index.toString()} padding="checkbox">
-                                        <InlineMath>{String.raw`Z_{${state.number}} - K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
+                                        <InlineMath>{String.raw`Z_{${state.number}} \text{--} K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                     </TableCell>
                                 )}
                                 <TableCell padding="checkbox">
