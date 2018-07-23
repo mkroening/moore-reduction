@@ -8,7 +8,15 @@ import {InlineMath} from 'react-katex';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import NumberInputCell from './NumberInputCell';
+
+const styles = {
+    firstCell: {
+        paddingLeft: '2.5%',
+    },
+};
 
 class InputRow extends React.Component {
     constructor(props) {
@@ -22,10 +30,10 @@ class InputRow extends React.Component {
     }
 
     render() {
-        const {values} = this.props;
+        const {values, classes} = this.props;
         return (
             <TableRow>
-                <TableCell padding="dense">
+                <TableCell className={classes.firstCell} padding="none">
                     <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
                 </TableCell>
                 {Array.from({length: values.length - 2}, (v, k) => (
@@ -41,6 +49,7 @@ InputRow.propTypes = {
     index: PropTypes.number.isRequired,
     values: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
-export default InputRow;
+export default withStyles(styles)(InputRow);

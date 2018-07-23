@@ -13,7 +13,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const styles = ({
     numberField: {
         width: 40,
-    }
+    },
 });
 
 const handleSelect = evt => {
@@ -34,7 +34,7 @@ class NumberInputCell extends React.Component {
     render() {
         const {label, value, classes} = this.props;
         return (
-            <TableCell padding="dense">
+            <TableCell padding="none">
                 <InlineMath>{label}</InlineMath>
                 <TextField type="number" className={classes.numberField}
                     value={value} onSelect={handleSelect}

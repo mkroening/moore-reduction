@@ -27,6 +27,9 @@ const styles = ({
     spacer: {
         flex: 'auto',
     },
+    firstCell: {
+        paddingLeft: '2.5%',
+    },
 });
 
 const handleSelect = evt => {
@@ -160,13 +163,13 @@ class InputTable extends React.Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell padding="dense">State</TableCell>
+                            <TableCell className={classes.firstCell} padding="none">State</TableCell>
                             {Array.from({length: inputCount}, (v, k) =>
-                                <TableCell key={k.toString()} padding="dense">
+                                <TableCell key={k.toString()} padding="none">
                                     <InlineMath>{String.raw`X_${k}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell padding="dense">Output</TableCell>
+                            <TableCell padding="none">Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
