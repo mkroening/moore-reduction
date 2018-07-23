@@ -14,17 +14,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
-const styles = ({
-    firstCell: {
-        paddingLeft: '2.5%',
-    },
-});
-
 class EquivalencePartitionTable extends React.Component {
     render() {
-        const {states, classes} = this.props;
+        const {states} = this.props;
         return (
             <Paper>
                 <Toolbar>
@@ -35,31 +27,31 @@ class EquivalencePartitionTable extends React.Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell className={classes.firstCell} padding="none">State</TableCell>
+                            <TableCell padding="checkbox">State</TableCell>
                             {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                <TableCell key={k.toString()} padding="none">
+                                <TableCell key={k.toString()} padding="checkbox">
                                     <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                 </TableCell>
                             )}
-                            <TableCell padding="none">Partition</TableCell>
-                            <TableCell padding="none">Output</TableCell>
+                            <TableCell padding="checkbox">Partition</TableCell>
+                            <TableCell padding="checkbox">Output</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {states.map((state, index, states) =>
                             <TableRow key={state.number.toString()}>
-                                <TableCell className={classes.firstCell} padding="none">
+                                <TableCell padding="checkbox">
                                     <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                 </TableCell>
                                 {state.nextStates.map((state, index) =>
-                                    <TableCell key={index.toString()} padding="none">
+                                    <TableCell key={index.toString()} padding="checkbox">
                                         <InlineMath>{String.raw`Z_{${state.number}} - K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding="none">
+                                <TableCell padding="checkbox">
                                     <InlineMath>{String.raw`K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                 </TableCell>
-                                <TableCell padding="none">
+                                <TableCell padding="checkbox">
                                     <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                 </TableCell>
                             </TableRow>
@@ -73,7 +65,6 @@ class EquivalencePartitionTable extends React.Component {
 
 EquivalencePartitionTable.propTypes = {
     states: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(EquivalencePartitionTable);
+export default EquivalencePartitionTable;
