@@ -67,6 +67,9 @@ class InputTable extends React.Component {
             newStateCount = inputCount;
         else if (newStateCount < 2)
             newStateCount = 2;
+        // arbitrary limit to preserve responsiveness
+        else if (newStateCount > 20)
+            newStateCount = 20;
         if (newStateCount !== stateCount) {
             const newTable = JSON.parse(JSON.stringify(table));
             if (newStateCount < stateCount) {
@@ -95,6 +98,9 @@ class InputTable extends React.Component {
             newInputCount = inputCount;
         else if (newInputCount < 1)
             newInputCount = 1;
+        // arbitrary limit to preserve responsiveness
+        else if (newInputCount > 10)
+            newInputCount = 10;
         if (newInputCount !== inputCount) {
             const newTable = JSON.parse(JSON.stringify(table));
             if (newInputCount < inputCount)
