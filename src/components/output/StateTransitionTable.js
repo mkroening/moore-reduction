@@ -78,7 +78,7 @@ class StateTransitionTable extends React.Component {
 
 StateTransitionTable.propTypes = {
     states: PropTypes.array.isRequired,
-    classes: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(StateTransitionTable);
