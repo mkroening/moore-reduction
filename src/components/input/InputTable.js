@@ -180,13 +180,9 @@ class InputTable extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Array.from({length: stateCount}, (v, k) =>
-                                <InputRow key={k.toString()}
-                                    index={k}
-                                    values={table[k]}
-                                    onChange={this.handleCellChange}
-                                />
-                            )}
+                            {table.map((row, index) => (
+                                <InputRow key={index.toString()} index={index} values={row} onChange={this.handleCellChange}/>
+                            ))}
                         </TableBody>
                     </Table>
                 </div>

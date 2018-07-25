@@ -28,8 +28,8 @@ class InputRow extends React.Component {
                 <TableCell padding="checkbox">
                     <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
                 </TableCell>
-                {Array.from({length: values.length - 2}, (v, k) => (
-                    <NumberInputCell key={(k+1).toString()} label="Z" value={values[k + 1]} index={k + 1} onChange={this.handleCellChange}/>
+                {values.slice(1, values.length - 1).map((cell, index) => (
+                    <NumberInputCell key={index.toString()} label="Z" value={cell} index={index + 1} onChange={this.handleCellChange}/>
                 ))}
                 <NumberInputCell label="Y" value={values[values.length - 1]} index={values.length - 1} onChange={this.handleCellChange}/>
             </TableRow>
