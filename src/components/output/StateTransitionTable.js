@@ -14,7 +14,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import States from '../../utils/States';
+
+const styles = {
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+};
 
 class StateTransitionTable extends React.Component {
     static reduceStates(states) {
@@ -23,7 +31,7 @@ class StateTransitionTable extends React.Component {
     }
 
     render() {
-        const {states} = this.props;
+        const {states, classes} = this.props;
         return (
             <Paper>
                 <Toolbar>
@@ -31,36 +39,38 @@ class StateTransitionTable extends React.Component {
                         Reduced Machine
                     </Typography>
                 </Toolbar>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell padding="checkbox">State</TableCell>
-                            {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                <TableCell key={k.toString()} padding="checkbox">
-                                    <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
-                                </TableCell>
-                            )}
-                            <TableCell padding="checkbox">Output</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {states.map(state => (
-                            <TableRow key={state.number.toString()}>
-                                <TableCell padding="checkbox">
-                                    <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
-                                </TableCell>
-                                {state.nextStates.map((state, index) =>
-                                    <TableCell key={index.toString()} padding="checkbox">
-                                        <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
+                <div className={classes.tableWrapper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell padding="checkbox">State</TableCell>
+                                {Array.from({length: states[0].nextStates.length}, (v, k) =>
+                                    <TableCell key={k.toString()} padding="checkbox">
+                                        <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding="checkbox">
-                                    <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
-                                </TableCell>
+                                <TableCell padding="checkbox">Output</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {states.map(state => (
+                                <TableRow key={state.number.toString()}>
+                                    <TableCell padding="checkbox">
+                                        <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
+                                    </TableCell>
+                                    {state.nextStates.map((state, index) =>
+                                        <TableCell key={index.toString()} padding="checkbox">
+                                            <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
+                                        </TableCell>
+                                    )}
+                                    <TableCell padding="checkbox">
+                                        <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
             </Paper>
         );
     }
@@ -68,6 +78,7 @@ class StateTransitionTable extends React.Component {
 
 StateTransitionTable.propTypes = {
     states: PropTypes.array.isRequired,
+    classes: PropTypes.array.isRequired,
 };
 
-export default StateTransitionTable;
+export default withStyles(styles)(StateTransitionTable);

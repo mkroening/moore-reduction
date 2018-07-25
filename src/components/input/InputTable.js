@@ -27,6 +27,9 @@ const styles = ({
     spacer: {
         flex: 'auto',
     },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
 });
 
 const handleSelect = evt => {
@@ -163,28 +166,30 @@ class InputTable extends React.Component {
                         onClick={this.handleSubmit}
                     >Reduce</Button>
                 </Toolbar>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell padding="checkbox">State</TableCell>
-                            {Array.from({length: inputCount}, (v, k) =>
-                                <TableCell key={k.toString()} padding="checkbox">
-                                    <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
-                                </TableCell>
+                <div className={classes.tableWrapper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell padding="checkbox">State</TableCell>
+                                {Array.from({length: inputCount}, (v, k) =>
+                                    <TableCell key={k.toString()} padding="checkbox">
+                                        <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
+                                    </TableCell>
+                                )}
+                                <TableCell padding="checkbox">Output</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {Array.from({length: stateCount}, (v, k) =>
+                                <InputRow key={k.toString()}
+                                    index={k}
+                                    values={table[k]}
+                                    onChange={this.handleCellChange}
+                                />
                             )}
-                            <TableCell padding="checkbox">Output</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {Array.from({length: stateCount}, (v, k) =>
-                            <InputRow key={k.toString()}
-                                index={k}
-                                values={table[k]}
-                                onChange={this.handleCellChange}
-                            />
-                        )}
-                    </TableBody>
-                </Table>
+                        </TableBody>
+                    </Table>
+                </div>
             </Paper>
         );
     }
