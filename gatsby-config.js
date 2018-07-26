@@ -1,3 +1,3 @@
 module.exports = {
-  pathPrefix: `/moore-simplification`,
+  pathPrefix: `/moore-reduction`,
 };
