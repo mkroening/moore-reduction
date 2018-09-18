@@ -8,16 +8,15 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@material-ui/core": "^1.4.0",
-    "gatsby": "^1.9.250",
-    "gatsby-link": "^1.6.40",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-katex": "^2.0.2"
+    "@material-ui/core": "latest",
+    "gatsby": "latest",
+    "prop-types": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-katex": "latest"
   },
   "devDependencies": {
-    "eslint": "^5.2.0",
-    "eslint-plugin-react": "^7.10.0"
+    "eslint": "latest",
+    "eslint-plugin-react": "latest"
   }
 }
