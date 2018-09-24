@@ -13,6 +13,8 @@ import InputTable from '../components/input/InputTable';
 import States from '../utils/States';
 import StateTransitionTable from '../components/output/StateTransitionTable';
 
+import Layout from '../components/layout';
+
 const theme = createMuiTheme({
     typography: {
         fontSize: 18,
@@ -40,25 +42,27 @@ class Simplifier extends React.Component {
     render() {
         const {reductionSteps, reducedStates} = this.state;
         return (
-            <MuiThemeProvider theme={theme}>
-                <Grid style={{ padding: 10 }} container spacing={16} alignItems="center" justify="center">
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
-                    <CssBaseline/>
-                    <Grid xs item>
-                        <InputTable onSubmit={this.simplify}/>
-                    </Grid>
-                    {reductionSteps.map(step =>
-                        <Grid key={step.equivalence.toString()} xs item>
-                            <EquivalencePartitionTable states={step}/>
-                        </Grid>
-                    )}
-                    {reducedStates === undefined ? undefined :
+            <Layout>
+                <MuiThemeProvider theme={theme}>
+                    <Grid style={{padding: 10}} container spacing={16} alignItems="center" justify="center">
+                        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
+                        <CssBaseline/>
                         <Grid xs item>
-                            <StateTransitionTable states={reducedStates}/>
+                            <InputTable onSubmit={this.simplify}/>
                         </Grid>
-                    }
-                </Grid>
-            </MuiThemeProvider>
+                        {reductionSteps.map(step =>
+                            <Grid key={step.equivalence.toString()} xs item>
+                                <EquivalencePartitionTable states={step}/>
+                            </Grid>
+                        )}
+                        {reducedStates === undefined ? undefined :
+                            <Grid xs item>
+                                <StateTransitionTable states={reducedStates}/>
+                            </Grid>
+                        }
+                    </Grid>
+                </MuiThemeProvider>
+            </Layout>
         );
     }
 }

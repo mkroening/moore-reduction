@@ -12,9 +12,11 @@
     "gatsby": "latest",
     "gatsby-plugin-manifest": "latest",
     "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-react-helmet": "latest",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-helmet": "latest",
     "react-katex": "latest"
   },
   "devDependencies": {
