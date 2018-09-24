@@ -2,12 +2,11 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import EquivalencePartitionTable from '../components/output/EquivalencePartitionTable';
+import Layout from '../components/layout';
 import InputTable from '../components/input/InputTable';
 import States from '../utils/States';
+import EquivalencePartitionTable from '../components/output/EquivalencePartitionTable';
 import StateTransitionTable from '../components/output/StateTransitionTable';
-
-import Layout from '../components/layout';
 
 class Simplifier extends React.Component {
     constructor(props) {
