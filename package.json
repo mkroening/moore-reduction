@@ -10,6 +10,7 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "gatsby": "latest",
+    "gatsby-plugin-brotli": "latest",
     "gatsby-plugin-manifest": "latest",
     "gatsby-plugin-offline": "latest",
     "gatsby-plugin-react-helmet": "latest",
