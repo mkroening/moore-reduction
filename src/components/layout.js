@@ -6,7 +6,6 @@ import 'typeface-roboto';
 
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
 
 const theme = createMuiTheme({
     typography: {
@@ -24,7 +23,6 @@ const Layout = ({data, children}) => (
             <meta name="description" content={data.site.siteMetadata.description}/>
             <link rel="canonical" href={data.site.siteMetadata.siteUrl}/>
         </Helmet>
-        <CssBaseline/>
         <MuiThemeProvider theme={theme}>
             {children}
         </MuiThemeProvider>
