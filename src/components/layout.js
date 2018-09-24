@@ -7,6 +7,7 @@ import 'typeface-roboto';
 const Layout = ({data, children}) => (
     <>
         <Helmet>
+            <html lang="en"/>
             <meta charSet="utf-8"/>
             <title>{data.site.siteMetadata.title}</title>
             <meta name="author" content={data.site.siteMetadata.author}/>
