@@ -2,6 +2,7 @@ import {graphql, StaticQuery} from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
+import 'typeface-roboto';
 
 const Layout = ({data, children}) => (
     <>

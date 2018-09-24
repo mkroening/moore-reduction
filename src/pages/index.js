@@ -45,7 +45,6 @@ class Simplifier extends React.Component {
             <Layout>
                 <MuiThemeProvider theme={theme}>
                     <Grid style={{padding: 10}} container spacing={16} alignItems="center" justify="center">
-                        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"/>
                         <CssBaseline/>
                         <Grid xs item>
                             <InputTable onSubmit={this.simplify}/>

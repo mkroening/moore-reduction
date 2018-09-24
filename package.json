@@ -18,7 +18,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-helmet": "latest",
-    "react-katex": "latest"
+    "react-katex": "latest",
+    "typeface-roboto": "latest"
   },
   "devDependencies": {
     "eslint": "latest",
