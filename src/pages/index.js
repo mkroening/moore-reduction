@@ -1,7 +1,5 @@
 import React from 'react';
 
-import 'katex/dist/katex.min.css';
-
 import Grid from '@material-ui/core/Grid';
 
 import EquivalencePartitionTable from '../components/output/EquivalencePartitionTable';
