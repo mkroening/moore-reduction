@@ -4,6 +4,16 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import 'typeface-roboto';
 
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import CssBaseline from '@material-ui/core/CssBaseline/CssBaseline';
+
+const theme = createMuiTheme({
+    typography: {
+        fontSize: 18,
+    },
+});
+
 const Layout = ({data, children}) => (
     <>
         <Helmet>
@@ -14,7 +24,10 @@ const Layout = ({data, children}) => (
             <meta name="description" content={data.site.siteMetadata.description}/>
             <link rel="canonical" href={data.site.siteMetadata.siteUrl}/>
         </Helmet>
-        {children}
+        <CssBaseline/>
+        <MuiThemeProvider theme={theme}>
+            {children}
+        </MuiThemeProvider>
     </>
 );
 
