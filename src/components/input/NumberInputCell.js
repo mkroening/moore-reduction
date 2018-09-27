@@ -14,6 +14,9 @@ const styles = ({
     numberField: {
         width: 40,
     },
+    lineSpan: {
+        lineHeight: 2.3,
+    },
 });
 
 const handleSelect = evt => {
@@ -35,7 +38,9 @@ class NumberInputCell extends React.Component {
         const {label, value, classes} = this.props;
         return (
             <TableCell padding="none">
-                <InlineMath>{label}</InlineMath>
+                <span className={classes.lineSpan}>
+                    <InlineMath math={label}/>
+                </span>
                 <TextField type="number" className={classes.numberField}
                     value={value} onSelect={handleSelect}
                     onChange={this.handleChange}
