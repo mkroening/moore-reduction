@@ -1,10 +1,11 @@
 class States {
     static fromRawTable(rawTable) {
+        const outputs = Array.from(new Set(rawTable.map(rawRow => rawRow[rawRow.length - 1]))).sort((a, b) => a-b);
         const states = JSON.parse(JSON.stringify(rawTable))
             .map(rawRow => ({
                 number: rawRow[0],
                 output: rawRow[rawRow.length - 1],
-                equivalencePartition: rawRow[rawRow.length - 1],
+                equivalencePartition: outputs.indexOf(rawRow[rawRow.length - 1]),
                 nextStates: rawRow.slice(1, rawRow.length - 1).map(cell => ({number: cell})),
             }));
         states.equivalence = 0;
@@ -27,12 +28,12 @@ class States {
         });
     }
 
-    static getHighestEquivalencePartition(states) {
-        return states[states.length - 1].equivalencePartition;
+    static getEquivalencePartitionCount(states) {
+        return states[states.length - 1].equivalencePartition + 1;
     }
 
     static isOptimal(states) {
-        return Array.from({length: this.getHighestEquivalencePartition(states)}, (v, k) => k + 1)
+        return Array.from({length: this.getEquivalencePartitionCount(states)}, (v, k) => k)
             .map(equivalencePartition => states.filter(state => state.equivalencePartition === equivalencePartition))
             .every(group => group.slice(1)
                 .every(state => state.nextStates
@@ -46,10 +47,10 @@ class States {
     }
 
     static step(states) {
-        const groups = Array.from({length: this.getHighestEquivalencePartition(states)}, (v, k) => k + 1)
+        const groups = Array.from({length: this.getEquivalencePartitionCount(states)}, (v, k) => k)
             .map(equivalencePartition => JSON.parse(JSON.stringify(States.regroup(states.filter(state => state.equivalencePartition === equivalencePartition)))))
             .reduce((acc, val) => acc.concat(val), []);                         // TODO: Array.prototype.flatMap()
-        groups.forEach((group, index) => group.forEach(state => state.equivalencePartition = index + 1));
+        groups.forEach((group, index) => group.forEach(state => state.equivalencePartition = index));
         const nextStates = groups.reduce((acc, val) => acc.concat(val), []);    // TODO: Array.prototype.flatMap()
         this.sort(nextStates);
         this.applyEquivalencePartitions(nextStates);
