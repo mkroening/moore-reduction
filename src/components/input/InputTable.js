@@ -135,8 +135,8 @@ class InputTable extends React.Component {
             value = table[row][column];
         else if (value > table.length)
             value = table.length;
-        else if (value < 1)
-            value = 1;
+        else if (value < 0)
+            value = 0;
         if (table[row][column] !== value) {
             const newTable = JSON.parse(JSON.stringify(table));
             newTable[row][column] = value;
