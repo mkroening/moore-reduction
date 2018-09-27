@@ -11,6 +11,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -55,10 +56,20 @@ class InputTable extends React.Component {
         this.state = {
             table: defaultTable,
         };
+        this.handleStateIndexToggle = this.handleStateIndexToggle.bind(this);
         this.handleCellChange = this.handleCellChange.bind(this);
         this.handleStateCountChange = this.handleStateCountChange.bind(this);
         this.handleInputCountChange = this.handleInputCountChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleStateIndexToggle() {
+        const {table} = this.state;
+        const newTable = table.map(row => row.map((cell, index, row) =>
+            index < row.length - 1 ? (table[0][0] === 1 ? cell - 1 : cell + 1) : cell));
+        this.setState({
+            table: newTable,
+        });
     }
 
     handleStateCountChange(evt) {
@@ -170,7 +181,11 @@ class InputTable extends React.Component {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell padding="checkbox">State</TableCell>
+                                <TableCell padding="checkbox">
+                                    <TableSortLabel hideSortIcon onClick={this.handleStateIndexToggle}>
+                                        States
+                                    </TableSortLabel>
+                                </TableCell>
                                 {Array.from({length: inputCount}, (v, k) =>
                                     <TableCell key={k.toString()} padding="checkbox">
                                         <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
