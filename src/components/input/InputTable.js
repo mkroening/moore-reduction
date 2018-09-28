@@ -79,8 +79,8 @@ class InputTable extends React.Component {
         const inputCount = table[0].length - 2;
         if (isNaN(newStateCount))
             newStateCount = inputCount;
-        else if (newStateCount < 2)
-            newStateCount = 2;
+        else if (newStateCount < 1)
+            newStateCount = 1;
         // arbitrary limit to preserve responsiveness
         else if (newStateCount > 20)
             newStateCount = 20;
