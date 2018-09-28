@@ -13,14 +13,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const styles = {
+const styles = ({
     tableWrapper: {
         overflowX: 'auto',
     },
-};
+    rowGrey: {
+        backgroundColor: grey[200],
+    },
+});
 
 class EquivalencePartitionTable extends React.Component {
     render() {
@@ -48,7 +52,7 @@ class EquivalencePartitionTable extends React.Component {
                         </TableHead>
                         <TableBody>
                             {states.map((state, index, states) =>
-                                <TableRow key={state.number.toString()}>
+                                <TableRow className={state.equivalencePartition % 2 === 1 ? classes.rowGrey : false} key={state.number.toString()}>
                                     <TableCell padding="checkbox">
                                         <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                     </TableCell>
