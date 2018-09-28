@@ -1,13 +1,12 @@
 class States {
     static fromRawTable(rawTable) {
         const outputs = Array.from(new Set(rawTable.map(rawRow => rawRow[rawRow.length - 1]))).sort((a, b) => a-b);
-        const states = JSON.parse(JSON.stringify(rawTable))
-            .map(rawRow => ({
-                number: rawRow[0],
-                output: rawRow[rawRow.length - 1],
-                equivalencePartition: outputs.indexOf(rawRow[rawRow.length - 1]),
-                nextStates: rawRow.slice(1, rawRow.length - 1).map(cell => ({number: cell})),
-            }));
+        const states = rawTable.map(rawRow => ({
+            number: rawRow[0],
+            output: rawRow[rawRow.length - 1],
+            equivalencePartition: outputs.indexOf(rawRow[rawRow.length - 1]),
+            nextStates: rawRow.slice(1, rawRow.length - 1).map(cell => ({number: cell})),
+        }));
         states.equivalence = 0;
         this.sort(states);
         this.applyEquivalencePartitions(states);

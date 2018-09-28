@@ -85,7 +85,7 @@ class InputTable extends React.Component {
         else if (newStateCount > 20)
             newStateCount = 20;
         if (newStateCount !== stateCount) {
-            const newTable = JSON.parse(JSON.stringify(table));
+            const newTable = table.map(row => row.slice());
             if (newStateCount < stateCount) {
                 newTable.splice(newStateCount);
                 newTable.forEach((row, index, table) => row.forEach((cell, index, row) => {
@@ -116,7 +116,7 @@ class InputTable extends React.Component {
         else if (newInputCount > 10)
             newInputCount = 10;
         if (newInputCount !== inputCount) {
-            const newTable = JSON.parse(JSON.stringify(table));
+            const newTable = table.map(row => row.slice());
             if (newInputCount < inputCount)
                 newTable.forEach(row => row.splice(newInputCount + 1, inputCount - newInputCount));
             else if (newInputCount > inputCount)
@@ -138,7 +138,7 @@ class InputTable extends React.Component {
         else if (value < table[0][0])
             value = table[0][0];
         if (table[row][column] !== value) {
-            const newTable = JSON.parse(JSON.stringify(table));
+            const newTable = table.map(row => row.slice());
             newTable[row][column] = value;
             this.setState({
                 table: newTable,
