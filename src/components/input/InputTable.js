@@ -133,10 +133,10 @@ class InputTable extends React.Component {
         const {table} = this.state;
         if (isNaN(value))
             value = table[row][column];
-        else if (value > table.length)
-            value = table.length;
-        else if (value < 0)
-            value = 0;
+        else if (value > table[table.length - 1][0])
+            value = table[table.length - 1][0];
+        else if (value < table[0][0])
+            value = table[0][0];
         if (table[row][column] !== value) {
             const newTable = JSON.parse(JSON.stringify(table));
             newTable[row][column] = value;
