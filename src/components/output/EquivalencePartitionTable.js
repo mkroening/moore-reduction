@@ -52,7 +52,7 @@ class EquivalencePartitionTable extends React.Component {
                         </TableHead>
                         <TableBody>
                             {states.map((state, index, states) =>
-                                <TableRow className={state.equivalencePartition % 2 === 1 ? classes.rowGrey : false} key={state.number.toString()}>
+                                <TableRow className={state.equivalencePartition % 2 === 1 ? classes.rowGrey : null} key={state.number.toString()}>
                                     <TableCell padding="checkbox">
                                         <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                     </TableCell>
