@@ -21,7 +21,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import InputRow from './InputRow';
 
-const styles = ({
+const styles = theme => ({
     toolbarNumberField: {
         width: 50,
     },
@@ -30,6 +30,9 @@ const styles = ({
     },
     tableWrapper: {
         overflowX: 'auto',
+    },
+    tableHeadButton: {
+        color: theme.palette.primary.dark,
     },
 });
 
@@ -182,7 +185,7 @@ class InputTable extends React.Component {
                         <TableHead>
                             <TableRow>
                                 <TableCell padding="checkbox">
-                                    <TableSortLabel hideSortIcon onClick={this.handleStateIndexToggle}>
+                                    <TableSortLabel hideSortIcon className={classes.tableHeadButton} onClick={this.handleStateIndexToggle}>
                                         States
                                     </TableSortLabel>
                                 </TableCell>
