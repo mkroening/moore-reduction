@@ -1,6 +1,6 @@
 class States {
     static fromRawTable(rawTable) {
-        const outputs = Array.from(new Set(rawTable.map(rawRow => rawRow[rawRow.length - 1]))).sort((a, b) => a-b);
+        const outputs = Array.from(new Set(rawTable.map(rawRow => rawRow[rawRow.length - 1]))).sort((a, b) => a - b);
         const states = rawTable.map(rawRow => ({
             number: rawRow[0],
             output: rawRow[rawRow.length - 1],
@@ -47,10 +47,10 @@ class States {
 
     static step(states) {
         const groups = Array.from({length: this.getEquivalencePartitionCount(states)}, (v, k) => k)
-            .map(equivalencePartition => JSON.parse(JSON.stringify(States.regroup(states.filter(state => state.equivalencePartition === equivalencePartition)))))
-            .reduce((acc, val) => acc.concat(val), []);                         // TODO: Array.prototype.flatMap()
+            .flatMap(equivalencePartition => JSON.parse(JSON.stringify(
+                States.regroup(states.filter(state => state.equivalencePartition === equivalencePartition)))));
         groups.forEach((group, index) => group.forEach(state => state.equivalencePartition = index));
-        const nextStates = groups.reduce((acc, val) => acc.concat(val), []);    // TODO: Array.prototype.flatMap()
+        const nextStates = groups.flat();
         this.sort(nextStates);
         this.applyEquivalencePartitions(nextStates);
         nextStates.equivalence = states.equivalence + 1;
