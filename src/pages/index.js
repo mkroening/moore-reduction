@@ -30,7 +30,7 @@ class Simplifier extends React.Component {
         const {reductionSteps, reducedStates} = this.state;
         return (
             <Layout>
-                <Grid style={{padding: 10}} container spacing={16} alignItems="center" justify="center">
+                <Grid style={{padding: 10}} container spacing={2} alignItems="center" justify="center">
                     <Grid xs item>
                         <InputTable onSubmit={this.simplify}/>
                     </Grid>
