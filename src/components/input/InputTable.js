@@ -163,7 +163,7 @@ class InputTable extends React.Component {
         return (
             <Paper>
                 <Toolbar>
-                    <Typography variant="title">
+                    <Typography variant="h6">
                         Input
                     </Typography>
                     <div className={classes.spacer}/>

@@ -32,7 +32,7 @@ class EquivalencePartitionTable extends React.Component {
         return (
             <Paper>
                 <Toolbar>
-                    <Typography variant="title">
+                    <Typography variant="h6">
                         {states.equivalence}-Distinguishable States
                     </Typography>
                 </Toolbar>

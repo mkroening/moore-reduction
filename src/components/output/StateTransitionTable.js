@@ -35,7 +35,7 @@ class StateTransitionTable extends React.Component {
         return (
             <Paper>
                 <Toolbar>
-                    <Typography variant="title">
+                    <Typography variant="h6">
                         Reduced Machine
                     </Typography>
                 </Toolbar>
