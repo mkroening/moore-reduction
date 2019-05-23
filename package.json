@@ -8,7 +8,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@material-ui/core": "3.9.3",
+    "@material-ui/core": "latest",
     "gatsby": "latest",
     "gatsby-plugin-manifest": "latest",
     "gatsby-plugin-offline": "latest",
