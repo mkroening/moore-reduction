@@ -40,30 +40,30 @@ class StateTransitionTable extends React.Component {
                     </Typography>
                 </Toolbar>
                 <div className={classes.tableWrapper}>
-                    <Table>
+                    <Table size="small">
                         <TableHead>
                             <TableRow>
-                                <TableCell padding="checkbox">State</TableCell>
+                                <TableCell>State</TableCell>
                                 {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                    <TableCell key={k.toString()} padding="checkbox">
+                                    <TableCell key={k.toString()}>
                                         <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding="checkbox">Output</TableCell>
+                                <TableCell>Output</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {states.map(state => (
                                 <TableRow key={state.number.toString()}>
-                                    <TableCell padding="checkbox">
+                                    <TableCell>
                                         <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                     </TableCell>
                                     {state.nextStates.map((state, index) =>
-                                        <TableCell key={index.toString()} padding="checkbox">
+                                        <TableCell key={index.toString()}>
                                             <InlineMath>{String.raw`Z'_{${state.equivalencePartition}}`}</InlineMath>
                                         </TableCell>
                                     )}
-                                    <TableCell padding="checkbox">
+                                    <TableCell>
                                         <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                     </TableCell>
                                 </TableRow>

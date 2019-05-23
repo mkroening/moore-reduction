@@ -181,20 +181,20 @@ class InputTable extends React.Component {
                     >Reduce</Button>
                 </Toolbar>
                 <div className={classes.tableWrapper}>
-                    <Table>
+                    <Table size="small">
                         <TableHead>
                             <TableRow>
-                                <TableCell padding="checkbox">
+                                <TableCell>
                                     <TableSortLabel hideSortIcon className={classes.tableHeadButton} onClick={this.handleStateIndexToggle}>
                                         States
                                     </TableSortLabel>
                                 </TableCell>
                                 {Array.from({length: inputCount}, (v, k) =>
-                                    <TableCell key={k.toString()} padding="checkbox">
+                                    <TableCell key={k.toString()}>
                                         <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding="checkbox">Output</TableCell>
+                                <TableCell>Output</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

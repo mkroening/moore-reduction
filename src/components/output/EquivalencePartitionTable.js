@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import 'katex/dist/katex.min.css';
-import {InlineMath} from 'react-katex';
+import { InlineMath } from 'react-katex';
 
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -37,34 +37,34 @@ class EquivalencePartitionTable extends React.Component {
                     </Typography>
                 </Toolbar>
                 <div className={classes.tableWrapper}>
-                    <Table>
+                    <Table size="small">
                         <TableHead>
                             <TableRow>
-                                <TableCell padding="checkbox">State</TableCell>
+                                <TableCell>State</TableCell>
                                 {Array.from({length: states[0].nextStates.length}, (v, k) =>
-                                    <TableCell key={k.toString()} padding="checkbox">
+                                    <TableCell key={k.toString()}>
                                         <InlineMath>{String.raw`X_{${k}}`}</InlineMath>
                                     </TableCell>
                                 )}
-                                <TableCell padding="checkbox">Partition</TableCell>
-                                <TableCell padding="checkbox">Output</TableCell>
+                                <TableCell>Partition</TableCell>
+                                <TableCell>Output</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {states.map((state, index, states) =>
                                 <TableRow className={state.equivalencePartition % 2 === 1 ? classes.rowGrey : null} key={state.number.toString()}>
-                                    <TableCell padding="checkbox">
+                                    <TableCell>
                                         <InlineMath>{String.raw`Z_{${state.number}}`}</InlineMath>
                                     </TableCell>
                                     {state.nextStates.map((state, index) =>
-                                        <TableCell key={index.toString()} padding="checkbox">
+                                        <TableCell key={index.toString()}>
                                             <InlineMath>{String.raw`Z_{${state.number}} \text{--} K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                         </TableCell>
                                     )}
-                                    <TableCell padding="checkbox">
+                                    <TableCell>
                                         <InlineMath>{String.raw`K_{${state.equivalencePartition}}^{${states.equivalence}}`}</InlineMath>
                                     </TableCell>
-                                    <TableCell padding="checkbox">
+                                    <TableCell>
                                         <InlineMath>{String.raw`Y_{${state.output}}`}</InlineMath>
                                     </TableCell>
                                 </TableRow>

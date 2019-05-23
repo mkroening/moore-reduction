@@ -25,7 +25,7 @@ class InputRow extends React.Component {
         const {values} = this.props;
         return (
             <TableRow>
-                <TableCell padding="checkbox">
+                <TableCell>
                     <InlineMath>{String.raw`Z_{${values[0]}}`}</InlineMath>
                 </TableCell>
                 {values.slice(1, values.length - 1).map((cell, index) => (
