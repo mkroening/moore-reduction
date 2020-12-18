@@ -12,7 +12,7 @@ module.exports = {
             resolve: `gatsby-plugin-manifest`,
             options: {
                 name: `Moore Reduction Procedure`,
-                short_name: `Moore`,
+                short_name: `Moore Reduction`,
                 start_url: `/`,
                 scope: `/`,
                 background_color: `#ffffff`,
