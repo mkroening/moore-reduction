@@ -13,8 +13,8 @@ module.exports = {
             options: {
                 name: `Moore Reduction Procedure`,
                 short_name: `Moore`,
-                start_url: `/moore-reduction/`,
-                scope: `/moore-reduction/`,
+                start_url: `/`,
+                scope: `/`,
                 background_color: `#ffffff`,
                 theme_color: `#4352af`,
                 display: `standalone`,
