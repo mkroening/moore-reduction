@@ -25,11 +25,6 @@ const styles = {
 };
 
 class StateTransitionTable extends React.Component {
-    static reduceStates(states) {
-        return Array.from({length: States.getEquivalencePartitionCount(states)}, (v, k) => k)
-            .map(equivalencePartition => states.find(state => state.equivalencePartition === equivalencePartition));
-    }
-
     render() {
         const {states, classes} = this.props;
         return (
