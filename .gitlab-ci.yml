@@ -9,7 +9,7 @@ cache:
 pages:
   script:
   - yarn install
-  - yarn run build --prefix-paths
+  - yarn build --prefix-paths
   - gzip --recursive --keep public
   artifacts:
     paths:
