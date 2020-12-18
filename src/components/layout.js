@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import 'typeface-roboto';
 import 'katex/dist/katex.min.css';
 
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     typography: {
@@ -24,9 +23,9 @@ const Layout = ({data, children}) => (
             <meta name="description" content={data.site.siteMetadata.description}/>
             <link rel="canonical" href={data.site.siteMetadata.siteUrl}/>
         </Helmet>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
             {children}
-        </MuiThemeProvider>
+        </ThemeProvider>
     </>
 );
 
