@@ -3,10 +3,13 @@
   "description": "Simplifies moore machines",
   "license": "GPL-3.0",
   "scripts": {
-    "develop": "gatsby develop",
     "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "test:unit": "jest"
   },
   "dependencies": {
     "@material-ui/core": "latest",
@@ -22,7 +25,13 @@
     "typeface-roboto": "latest"
   },
   "devDependencies": {
+    "babel-jest": "latest",
+    "babel-preset-gatsby": "latest",
     "eslint": "latest",
-    "eslint-plugin-react": "latest"
+    "eslint-plugin-react": "latest",
+    "identity-obj-proxy": "latest",
+    "jest": "latest",
+    "prettier": "latest",
+    "react-test-renderer": "latest"
   }
 }
