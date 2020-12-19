@@ -39,6 +39,8 @@ pages:
   needs: 
     - yarn:install
     - test:gatsby
+  before_script:
+    - apk add --no-cache brotli
   script:
     - ./node_modules/.bin/gatsby build --prefix-paths
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
