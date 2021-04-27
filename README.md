@@ -1,4 +1,4 @@
-# [moore-reduction](https://mkroening.gitlab.io/moore-reduction/)
+# moore-reduction
 
 A static web application to execute the [Moore reduction procedure](https://en.wikipedia.org/wiki/Moore_reduction_procedure)
 

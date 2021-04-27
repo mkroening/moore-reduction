@@ -3,7 +3,7 @@ module.exports = {
         title: `Moore Reduction Procedure`,
         author: `Martin Kröning`,
         description: `A web app performing the Moore reduction procedure.`,
-        siteUrl: `https://mkroening.gitlab.io/moore-reduction/`,
+        siteUrl: `https://mkroening.github.io/moore-reduction/`,
     },
     pathPrefix: `/moore-reduction`,
     plugins: [
